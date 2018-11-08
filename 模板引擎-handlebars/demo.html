@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>handlebars模板引擎初体验</title>
+    <script src="handlebars-v4.0.12.js"></script>
+    <!-- 通过<script>标签包裹handlebars表达式传递模板给浏览器-->
+    <!-- type类型可以是除text/javascript以外的任何MIME类型,但推荐使用type="text/template",更加语义化
+            id是在后面进行编译的时候所使用,让其编译的代码找到该模板. -->
+    <script type="text/template" id="entry-template">
+        <div class="demo1">
+                <h1>{{title}}</h1>
+                <p>{{body}}</p>
+        </div>
+    </script>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        //模拟json数据
+        var data ={title: "My New Post", body: "This is my first post!"};
+
+        /* 在JavaScript中，使用Handlebars.compile来编译模板 */
+        // 1、获取模板
+        var source=document.getElementById("entry-template").innerHTML;
+        // 2、预编译模板----Handlebars.compile();参数即为获取到的模板
+        var template=Handlebars.compile(source);
+        // 3、利用模板解析数据---返回拼接好的字符串
+        var html=template(data);
+        // 4、渲染页面
+        document.getElementById("box").innerHTML=html;
+    </script>
+</body>
+
+</html>

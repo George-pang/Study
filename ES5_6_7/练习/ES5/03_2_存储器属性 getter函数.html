@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象存储器属性</title>
+</head>
+<body>
+<!--
+    对象本身的两个方法
+    * get propertyName(){} 用来得到当前属性值的回调函数，返回值作为属性的值
+    * set propertyName(){} 用来监视当前属性值变化的回调函数，点语法设置的属性值作为实参传入
+    当只有getter函数时，属性值是只读的，不能改；当只有setter函数时，属性值永远是undefined
+-->
+<script type='text/javascript'>
+    var obj = {
+        firstName : 'kobe',
+        lastName : 'bryant',
+        // 存储器属性：getter函数--获取当前属性值时触发
+        get fullName(){
+            return this.firstName+" "+this.lastName; //返回值作为属性fullName的值
+        },
+        //存储器属性：setter函数--用来监视当前属性值变化
+        set fullName(data){
+            var names=data.split(" ");
+            this.firstName=names[0];
+            this.lastName=names[1];
+        }
+    };
+    console.log(obj.fullName);//触发getter函数--当只设置了setter函数时，属性值永远是undefined
+    obj.fullName="JJ cask";//触发setter函数---当只设置了geter函数时，属性值只读
+    console.log(obj.fullName);
+
+</script>
+</body>
+</html>

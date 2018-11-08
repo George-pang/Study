@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>03_Object扩展——常用Object对象静态方法</title>
+</head>
+<body>
+<!--
+ES5给Object扩展了好一些静态方法, 常用的2个:
+1. Object.create(proto, [propertiesObject])
+  * 作用: 以指定对象为原型创建新的对象
+  * 参数1：提供新创建的对象的__proto__的现有对象，参数2：要添加到新创建对象的可枚举属性（即其自身定义的属性，而不是其原型链上的枚举属性）
+    value : 指定值
+    writable : 标识当前属性值是否是可修改的, 默认为false
+    configurable: 标识当前属性是否可以被删除 默认为false
+    enumerable： 标识当前属性是否能用for in 枚举 默认为false
+
+2. Object.defineProperties(object, descriptors)
+  * 作用: 为指定对象定义扩展多个属性
+  * get ：用来获取当前属性值的回调函数，当获取当前拓展属性时触发
+  * set ：修改当前属性值时触发的回调函数，并且实参即为修改后的值
+  * 存取器属性：setter,getter一个用来存值，一个用来取值
+-->
+<script type="text/javascript">
+    var obj = {name : 'plq', age : 29}
+    var obj1 = {};
+    //把obj对象作为新对象的__proto__，并添加可枚举属性sex
+    obj1=Object.create(obj,{
+        sex:{
+            value:"female",//sex可枚举属性的值
+            writable:true,//是否可编辑，默认false
+            configurable:true,//是否可删除，默认false
+            enumerable:true//此属性是否能用for in枚举,默认false
+        }
+    });
+    console.dir(obj1);
+    obj1.sex="male";
+    for(var i in obj1){
+        console.log(typeof i);//string
+        console.log(obj1[i]); //for in遍历对象属性
+    }
+    delete obj1.sex;
+    console.dir(obj1);
+
+    // Object.defineProperties(obj, props)方法直接在一个对象上定义新的属性或修改现有属性，并返回该对象。
+    var obj3={
+        firstName:"Bob",
+        lastName:"jerry"
+    }
+    Object.defineProperties(obj3,{
+        fullName:{
+            // value:this.firstName+" "+this.lastName,
+            // writable:true,
+            // enumerable:true,
+            get:function(){  //作为该属性的 getter 函数，如果没有 getter 则为undefined。函数返回值将被用作属性的值。
+                return this.firstName+" "+this.lastName;
+            },
+            set:function(data){ //作为属性的 setter 函数，如果没有 setter 则为undefined。函数将仅接受参数赋值给该属性的新值--obj3.fullName的值作为函数实参
+                var names=data.split(" ");
+                this.firstName=names[0];
+                this.lastName=names[1];
+                //geter函数：get语法将对象属性绑定到对象，并在查询该属性时将被调用的函数。
+                // 当尝试设置属性时，set语法将对象属性绑定到要调用的函数。
+            }
+        }
+    })
+    console.dir(obj3);
+    // 如果只设置了getter函数,那么新增属性是只读的,不能修改；如果只设置了setter函数，则获取的属性值为undefined
+    console.log(obj3.fullName); //当只有seter函数时，值为undefined
+    obj3.fullName="JJ ck";
+    console.log(obj3.fullName);//当只有seter函数时，值为undefined，即使上面写了obj3.fullName="JJ ck";
+</script>
+</body>
+</html>

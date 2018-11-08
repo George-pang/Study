@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* JSON(JSON: JavaScript Object Notation(JavaScript 对象表示法))，是一种轻量级的文本数据交换格式 */
+        /* JSON对象的key必须是字符串,值可以是合法的JSON数据类型(字符串、数字、布尔值、对象、数组、null) */
+        var obj = {
+            "name": "Bob"
+        };
+        // JSON.stringify()方法将JSON对象/数组转化为JSON格式的字符串
+        obj = JSON.stringify(obj);
+        console.log(typeof obj); //string
+        // JSON.parse()方法将json格式的字符串转化为json对象
+        obj = JSON.parse(obj);
+        console.log(typeof obj); //obj
+
+        var arr=["lisi","wangwu",1,null];
+        // 将JSON数组转换为字符串
+        arr=JSON.stringify(arr);
+        console.log(arr);
+
+        var txt = '{ "sites" : [' +
+            '{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+            '{ "name":"google" , "url":"www.google.com" },' +
+            '{ "name":"微博" , "url":"www.weibo.com" } ]}';
+        console.dir(JSON.parse(txt));
+        console.log(JSON.parse(txt));
+        //eval()函数可用于将json格式字符串文本转换为js对象
+        console.log(eval("("+txt+")"));
+        // console.log(eval(txt));//报错
+
+        /* 
+        创建包含 JSON 语法的 JavaScript 字符串：
+            var txt = '{ "sites" : [' +
+            '{ "name":"菜鸟教程" , "url":"www.runoob.com" },' +
+            '{ "name":"google" , "url":"www.google.com" },' +
+            '{ "name":"微博" , "url":"www.weibo.com" } ]}';
+            由于 JSON 语法是 JavaScript 语法的子集，JavaScript 函数 eval() 可用于将 JSON 格式的文本(字符串)转换为 JavaScript对象。
+
+            eval() 函数使用的是 JavaScript 编译器，可解析 JSON 文本，然后生成 JavaScript 对象。必须把文本包围在括号中，这样才能避免语法错误：
+
+            var obj = eval ("(" + txt + ")");
+        */
+    </script>
+</body>
+
+</html>

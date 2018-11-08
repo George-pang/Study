@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body>
+
+<div id="result"></div>
+<p id="name"></p>
+<script>
+    /* 可以使用localstorage.setItem()/getItem()来存取本地数据，也可以直接localstorage点语法来新增获取 */
+if(typeof(Storage)!=="undefined")
+{
+  localStorage.sitename="菜鸟教程";
+  localStorage.username="锋芒";
+  localStorage.setItem("name","123");
+  document.getElementById("result").innerHTML="网站名：" + localStorage.sitename;
+  document.getElementById("name").innerHTML="姓名：" + localStorage.getItem("name");
+  console.log(localStorage.name);//setItem()方法添加的数据项也能通过localstorage对象点语法访问----证明本地web存储其实就是将数据存储到localstorge对象属性上
+  delete localStorage.sitename; //删除对象属性
+  localStorage.removeItem("name");//removeItem()移除数据项
+}
+else
+{
+  document.getElementById("result").innerHTML="对不起，您的浏览器不支持 web 存储。";
+}
+</script>
+
+</body>
+</html>

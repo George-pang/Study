@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>05_Function扩展—修改函数内this指向的方法</title>
+</head>
+<body>
+<!--
+1. Function.prototype.bind(obj) :
+  * 作用: 将函数内的this绑定为obj, 并将函数返回，需要被调用才能执行，用于修改回调函数中的this指向
+2. 面试题: 区别bind()与call()和apply()?
+  * 都能指定函数中的this
+  * call()/apply()是立即调用函数
+  * bind()是将函数返回，需要调用才能被执行
+-->
+<script type="text/javascript">
+    var obj={
+      name:"age"
+    }
+    function fun(age) {
+        this.name = 'kobe';
+        this.age = age;
+        console.log(this);
+    }
+    fun(33);//this指向window
+    fun.bind(obj,33,444)(); //thi指向变为obj，参数传递形式为参数1，参数2...参数n，与call传参形式相同--bind()方法只是将函数返回，需要()执行符调用
+    fun.call(obj,333,444); //call()和apply()都是立即执行函数,不需要再()调用，两者传参形式不同
+    fun.apply(obj,[333,444]);
+    // var obj = {};
+    // fun.bind(obj, 12)();
+    // console.log(obj.name, obj.age);
+    
+    // bind()修改回调函数内的this指向并传参
+    setTimeout(function(data1,data2){
+      console.log(this,data1,data2)
+    }.bind(obj,11,22),1000);
+
+</script>
+</body>
+</html>

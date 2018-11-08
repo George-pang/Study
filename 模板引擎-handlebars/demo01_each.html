@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="handlebars-v4.0.12.js"></script>
+    <title>handlebars</title>
+</head>
+<body>
+<h1>each-基本循环使用方法</h1>
+<table style="border-collapse: collapse;" width="100%" border="1">
+    <thead>
+    <tr>
+        <th>姓名</th>
+        <th>性别</th>
+        <th>年龄</th>
+    </tr>
+    </thead>
+    <tbody id="tableList">
+
+    </tbody>
+</table>
+</body>
+<script id="entry-template" type="text/x-handlebars-template">
+    {{#each student}}
+    <tr>
+        <td>{{name}}</td>
+        <td>{{sex}}</td>
+        <td>{{age}}</td>
+    </tr>
+    {{/each}}
+</script>
+<script type="text/javascript">
+    var source = $("#entry-template").html();
+    var template = Handlebars.compile(source);
+    var context = {
+        "student": [
+            {
+                "name": "张三",
+                "sex": "0",
+                "age": 18
+            },
+            {
+                "name": "李四",
+                "sex": "0",
+                "age": 22
+            }
+        ]
+
+    };
+    var html = template(context);
+    $("#tableList").html(html);
+</script>
+</html>
