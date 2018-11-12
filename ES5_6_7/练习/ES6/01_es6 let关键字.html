@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>案例：循环遍历加事件监听-验证let关键字与var的区别</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <input type="button" value="测试1"><br>
+    <input type="button" value="测试2"><br>
+    <input type="button" value="测试3"><br>
+
+    <script>
+        /* es6 let关键字声明变量 
+            ***let
+            1. 作用:
+            * 与var类似, 用于声明一个变量
+            2. 特点:
+            * 在块作用域内有效,let允许把变量的作用域限制在块级域中，这里的块级可以是()内，或{}内。
+            * 不能重复声明
+            * 不会预处理, 不存在提升
+            3. 应用:
+            * 循环遍历加监听
+            * 使用let取代var是趋势
+        */
+
+        let a=33;
+        // let a=22; //报错，let不能重复声明
+        let btns = document.querySelectorAll("input");
+        // 案例：循环遍历加事件监听
+
+        // 1、var声明变量--需要解决闭包
+        // for(var i=0;i<btns.length;i++){
+        //     btns[i].onclick=function(){ //事件函数在事件队列内，函数内部定义代码只有在执行时浏览器才解析
+        //         alert(i); //由于闭包--弹出的都是3
+        //     }
+        // }
+
+        //利用立即执行函数解决闭包
+        // for (var i = 0; i < btns.length; i++) {
+        //     (function (i) {
+        //         btns[i].onclick = function () {
+        //             alert(i + 1);
+        //         }
+        //     })(i);
+
+        // }
+
+        // 2.let声明变量，有自己的块级作用域，而且不会预声明，不会出现var声明变量的这个问题
+        for (let i = 0; i < btns.length; i++) {
+            btns[i].onclick = function () { //事件函数在事件队列内，函数内部定义代码只有在执行时浏览器才解析
+                alert(i + 1); //由于闭包--弹出的都是3
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 Generator函数</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <!--
+   Generator函数
+    概念：
+      1、ES6提供的解决异步编程的方案之一
+      2、Generator函数是一个状态机，内部封装了不同状态的数据，
+      3、用来生成遍历器对象
+      4、可暂停函数(惰性求值), yield可暂停，next方法可启动。每次返回的是yield后的表达式结果
+    特点：
+      1、function关键字 与函数名之间有一个星号
+      2、函数体内部使用yield表达式，定义不同的内部状态（yield在英语里的意思就是“产出”）。
+      例如：
+        function* generatorExample(){
+          let result = yield 'hello';  // 状态值为hello
+          yield 'generator'; // 状态值为generator
+        }
+      3、generator函数返回的是指针对象(接11章节里iterator)，而不会执行函数内部逻辑
+      4、调用next方法函数内部逻辑开始执行，遇到yield表达式停止，返回{value: yield后的表达式结果/undefined, done: false/true},
+            value属性表示当前的内部状态的值，是yield表达式后面那个表达式的值；done属性是一个布尔值，表示是否遍历结束
+      5、再次调用next方法会从上一次停止时的yield处开始，直到最后
+      6、yield语句返回结果通常为undefined， 当调用next方法时传参内容会作为启动时yield语句的返回值。
+      7、遍历器对象的next方法的运行逻辑如下。
+        （1）遇到yield表达式，就暂停执行后面的操作，并将紧跟在yield后面的那个表达式的值，作为返回的对象的value属性值。
+        （2）下一次调用next方法时，再继续往下执行，直到遇到下一个yield表达式。
+        （3）如果没有再遇到新的yield表达式，就一直运行到函数结束，直到return语句为止，并将return语句后面的表达式的值，作为返回的对象的value属性值。
+        （4）如果该函数没有return语句，则返回的对象的value属性值为undefined。
+  -->
+
+    <script>
+        /* 1、Generator函数初体验 start*/
+        // Generator函数返回的是指针（遍历器）对象
+        function* myGenerator() {
+            console.log("开始执行！" + "1：Generator函数的function关键字与函数名之间有个 * 号!" + " 遇到第一个yield语句暂停执行");
+            yield "hello";
+            console.log("暂停后，再次执行");
+            yield "generator函数";
+            console.log("遍历完毕");
+            return "显式return想返回的结果，则遍历结束时next()返回对象value值就是return的内容";
+        }
+        // 它内部有两个yield表达式（hello和generator函数），即该函数有三个状态：hello，generator函数 和 return 语句（结束执行）。
+
+        console.log(typeof (myGenerator())); //object---证明Generator函数返回的是指针(遍历器)对象
+        var myGenerator = myGenerator();
+        // 调用遍历器对象的next()方法,返回一个{value：xxx，done：xxx}对象
+        console.log(myGenerator.next()); //{value: "hello", done: false}---开始执行Generator函数，遇到第一个yield语句后，执行完当前yield后面的表达式，暂停执行后面的操作，
+                                        //并将紧跟在yield后面的那个表达式的值，作为返回的对象的value属性值。done为false表示遍历还未结束
+        console.log(myGenerator.next()); //{value: "generator函数", done: false}---继续执行，遇到第二个yield语句暂停yield表达式后面的操作
+        console.log(myGenerator.next()); //{value: undefined, done: true}/{value: "显式return想返回的结果，则遍历结束时next()返回对象value值就是return的内容", done: true}
+        // 因为函数内部若没return语句，会隐式return undefined,所以返回对象的value值为undefined,除非显式return想返回的结果
+
+        /* 2、拓展：next()方法的实参作为其启动的yield语句的返回值 */
+        function* myGenerator2() {
+            console.log("开始执行");
+            let result = yield "hello";
+            console.log("第一个yield语句的返回值为：" + result);
+            console.log("暂停后，再次执行");
+            yield "generator函数";
+            console.log("遍历完毕");
+            return "显式return想返回的结果";
+        }
+        console.log(typeof (myGenerator2())); //object---证明Generator函数返回的是指针(遍历器)对象
+        var myGenerator2 = myGenerator2();
+        // 调用遍历器对象的next()方法,返回一个{value：xxx，done：xxx}对象
+        console.log(myGenerator2.next()); //启动Generator函数---第一个next方法用来启动遍历器对象，所以不用带有参数。
+        console.log(myGenerator2.next("启动它的next方法的参数")); //next方法的参数作为上一个yield表达式的返回值
+        console.log(myGenerator2.next());
+        /* 
+            yield表达式本身没有返回值，或者说总是返回undefined。next方法可以带一个参数，该参数就会被当作上一个yield表达式的返回值。
+        
+         */
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Page_Title</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <script>
+        function Per(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        var per = new Per(20, 30);
+        console.log(per); //Per {x: 20, y: 30}
+        var per1 = new Per();
+        console.log(per1); //Per {x: undefined, y: undefined}
+
+        // 浏览器解析函数时函数内部隐式操作
+        /* 
+        function Per(x,y){
+            var x;
+            var y;
+            this.x=x;
+            this.y=y;
+            // 如果没有return语句，则隐式在函数最后执行下步操作
+            return undefined;
+        }
+
+         */
+
+        //设置函数形参默认值
+        function Person(x=0, y=0) {
+            // var x=x||0;
+            // var y=y||0;
+            this.x = x;
+            this.y = y;
+        }
+        var per_1 = new Person(20, 30);
+        console.log(per_1); //Person {x: 20, y: 30}
+        var per_2 = new Person();
+        console.log(per_2); //Person {x: 0, y: 0}
+    </script>
+</body>
+
+</html>

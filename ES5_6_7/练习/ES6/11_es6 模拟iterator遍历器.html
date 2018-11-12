@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 模拟iterator遍历器对象</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <!--
+    概念： iterator是一种接口机制，为各种不同的数据结构提供统一的访问机制
+    作用：
+      1、为各种数据结构，提供一个统一的、简便的访问接口；
+      2、使得数据结构的成员能够按某种次序排列
+      3、ES6创造了一种新的遍历命令for...of循环，Iterator接口主要供for...of消费。
+
+    工作原理：
+      - 创建一个指针对象，指向数据结构的起始位置。
+      - 第一次调用next方法，指针自动指向数据结构的第一个成员
+      - 接下来不断调用next方法，指针会一直往后移动，直到指向最后一个成员
+      - 每调用next方法返回的是一个包含value和done的对象，{value: 当前成员的值,done: 布尔值}
+        * value表示当前成员的值，done对应的布尔值表示当前的数据的结构是否遍历结束。
+        * 当遍历结束的时候返回的value值是undefined，done值为true
+
+    原生具备iterator接口的数据(可用for of遍历)
+      1、Array
+      2、arguments
+      3、set容器
+      4、map容器
+      5、String
+      。。。
+  -->
+    <script>
+        /* 1、模拟iterator指针(遍历器)对象的实现原理来遍历数组 */
+        function getIterator(arr) {
+            var curIndex = 0;//记录指针的位置
+            return {  //返回iterartor(遍历器)对象
+            //其next()方法 返回一个包含value和done的对象{value: 当前成员的值,done: 布尔值}，当遍历结束的时候返回的value值是undefined，done值为false
+                next() {  
+                    return curIndex < arr.length ? {value: arr[curIndex++],done: false} : {value: undefined,done: true};
+                }
+            }
+        }
+        var arr = [1, 44, 66, "abc"];
+        //获取函数返回的对象
+        var iterator = getIterator(arr);
+        //控制台输出对象方法调用后返回的结果
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+        console.log(iterator.next());
+
+        /* 2、es6 部署了iterator接口的数据类型，可以用 for...of来遍历 */
+        // ES6创造了一种新的遍历命令for...of循环，Iterator接口主要供for...of消费。
+        //原生部署了iterator接口的数据类型有：数组、字符串、arguments、set容器、map容器
+        
+        //for...of遍历数组
+        var arr=[1,2,444,"aaa"];
+        for(let i of arr){
+            console.log(i);
+        }
+        //for...of遍历字符串
+        var str="abafafg";
+        for(let i of str){
+            console.log(i);
+        }
+        //for...of遍历arguments
+        function foo(){
+            for(var i of arguments){
+                console.log(i);
+            }
+        }
+        foo(1,22,"abd");
+
+        //for...of方法遍历对象---报错(obj is not iterable 不可迭代)--没有部署iterator接口
+        // var obj={username:"kobe",age:39};
+        // for(var i of obj){
+        //     console.log(i);
+        // }
+
+        /* 当使用for...of去遍历某一个数据结构时，首先去找Symbol.iterator，找到了就遍历，找不到就不能遍历（xxx is not iterable 不可迭代） */
+
+
+        /* 3、点点点运算符、解构赋值，默认就是调用了iterator接口去遍历 */
+        var arr1=[1,6];
+        var arr2=[2,3,4,5];
+        console.log([1,...arr2,6]);//(6) [1, 2, 3, 4, 5, 6]
+        var [a,b]=arr2;
+        console.log(a,b);//2 3
+
+
+
+        /* 4、为对象人工部署iterator接口,从而使用for...of遍历*/
+        var obj={
+            username:"kobe",
+            age:39
+        }
+        /* start*/
+        // 浏览器报错：因为对象内部没有原生部署iterator接口，不能直接使用for...of遍历
+        // for(var i of obj){
+        //     console.log(i);
+        // }
+        /* end */
+
+        // 使用Generator函数来为对象部署iterator接口
+        /* 1、对象的Symbol.iterator属性，指向该对象的默认遍历器方法。
+                 对象进行for...of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器对象。
+           2、Generator函数会返回一个遍历器对象，因此可使用Generator函数来作为对象的Symbol.iterator属性,
+                 人为给对象部署iterator接口，从而使用for...of遍历(遍历出的值为yield语句后面跟的值)
+         */
+         console.log(obj[Symbol.iterator]);//undefined
+         //人为部署
+        obj[Symbol.iterator]=function* myTest(){
+            yield 1;
+            yield 2;
+            yield 3;
+        }
+        // 使用for...of遍历对象
+        for(var i of obj){
+            console.log(i);//1 2 3
+        }
+
+        /*拓展 start*/  
+
+        /*给对象的[Symbol.iterator]属性添加模拟方法，等同于在指定的数据内结构部署了iterator接口--注意：只是模拟实现原理，这段代码有点bug*/
+        // var obj2={
+        //     username:"kobe",
+        //     age:39,
+        //     [Symbol.iterator]:function(){
+        //         let curIndex=0;
+        //         return {//遍历器对象
+        //         //对象的next()方法
+        //         next:function(){
+        //             // Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组
+        //             return  curIndex<Object.keys(this).length?{value:Object.keys(this)[curIndex++],done:false}:{value:undefined,done:true};
+        //             }
+        //         }
+        //     }
+        // };
+        // console.dir(obj2);
+        // console.log(Object.keys(obj2));
+        // console.log(obj2[Symbol.iterator]());//{next: ƒ}
+        // console.log(obj2[Symbol.iterator]().next())//{value: next, done: false}
+
+        /* end */
+
+    </script>
+</body>
+
+</html>

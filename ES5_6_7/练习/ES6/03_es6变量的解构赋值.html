@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Page Title</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+<body>
+    
+    <script>
+        /* es6变量的解构赋值 */
+        
+        // 1、对象变量的解构赋值
+        let obj={username:"zhangsan",age:28};
+        //以前的写法：
+        // let username=obj.username;
+        // let age=obj.age;
+        //解构赋值写法
+        let {username,age}=obj;
+        let {id,height}=obj;
+        console.log(username,age);//"zhangsan" 28
+        console.log(id,height);//undefined undefined--obj没有的属性，值为undefined
+
+        //2、数组变量的解构赋值
+
+        let arr=[1,343,22,"Bob",false];
+        let [a,b,c,d,e]=arr;    //按照索引来对应取值
+        console.log(a,b,c,d,e);//1 343 22 "Bob" false
+        // let [,,,a,]=arr; //报错--let不能重复声明，a已经声明过 
+        let [,,,f,]=arr;     //,来占位,从而对应取数组的值
+        console.log(f);  //"Bob"
+
+
+        //拓展：函数内对象的解构赋值
+        function foo(obj){
+            console.log(obj.username,obj.age);
+        }
+        foo(obj);
+        // 解构赋值写法
+        function fbb({username,age}){       //就是将原函数形参obj解构赋值写法为 {username，age}===>类似{username，age}=obj
+            console.log(username,age);
+        }
+        fbb(obj);
+    </script>
+</body>
+</html>

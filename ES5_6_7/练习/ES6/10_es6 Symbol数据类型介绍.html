@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <title>es6 Symbol属性介绍</title>
+  <link rel="stylesheet" type="text/css" href="" />
+  <script src=""></script>
+</head>
+
+<body>
+  <!--
+    前言：ES5中对象的属性名都是字符串，容易造成重名(属性名的冲突)，污染环境
+    Symbol：
+      概念：ES6中的添加了一种原始数据类型symbol(已有的原始数据类型：String, Number, boolean, null, undefined, 对象)，
+      ES6 引入了一种新的原始数据类型Symbol，表示独一无二的值。它是 JavaScript 语言的第七种数据类型
+      Symbol 值通过Symbol函数生成。这就是说，对象的属性名现在可以有两种类型，一种是原来就有的字符串，另一种就是新增的 Symbol 类型。
+      凡是属性名属于 Symbol 类型，就都是独一无二的，可以保证不会与其他属性名产生冲突。
+
+      注意，Symbol 值作为对象属性名时，不能用点运算符。
+      
+      特点：
+        1、Symbol属性对应的值是唯一的，解决命名冲突问题
+        2、Symbol值不能与其他数据进行计算，包括同字符串拼串
+        3、for in, for of遍历时不会遍历symbol属性。
+      使用：
+        1、调用Symbol函数得到symbol值
+          let symbol = Symbol();
+          let obj = {};
+          obj[symbol] = 'hello';
+        2、传参标识
+          let symbol = Symbol('one');
+          let symbol2 = Symbol('two');
+          console.log(symbol);// Symbol('one')
+          console.log(symbol2);// Symbol('two')
+        3、内置Symbol值
+          * 除了定义自己使用的Symbol值以外，ES6还提供了11个内置的Symbol值，指向语言内部使用的方法。
+          - Symbol.iterator
+           * 对象的Symbol.iterator属性，指向该对象的默认遍历器方法
+           对象进行for...of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器
+
+  -->
+  <script>
+    //Symbol 值通过Symbol函数生成,生成原始Symbol数据类型值
+    var symbol = Symbol(); //注意，Symbol函数前不能使用new命令，否则会报错。这是因为生成的 Symbol 是一个原始类型的值，不是对象。
+    console.log(symbol);
+    console.log(typeof symbol); //symbol类型
+
+    var obj = {
+      username: "kobe",
+      age: 39
+    }; //es5中对象的属性名都是字符串，容易出现属性命名重复冲突问题
+    //注意，Symbol 值作为对象属性名时，不能用点运算符。
+    obj[symbol] = "Hello World"; //因为Symbol数据类型值唯一，用它来作为属性名，就不会出现命名冲突  
+    console.log(obj);
+
+    var symbol2 = Symbol();
+    var symbol3 = Symbol();
+    console.log(symbol2 == symbol3); //false---Symbol属性对应的值是唯一的，解决命名冲突问题
+
+    //Symbol函数可以接受一个字符串作为参数，表示对 Symbol 实例的描述，利于区分
+    var symbol4 = Symbol("one");
+    var symbol5 = Symbol("two");
+    console.log(symbol4 == symbol5);
+    console.log(symbol4, symbol5);
+
+    // 利用Symbol属性定义常量
+    const Person_key = Symbol("Person_key");
+    console.log(Person_key);
+
+    // Symbol数据类型作为对象属性名，不能被for...in,for...of遍历
+    var symbol6 = Symbol();
+    var obj2 = {
+      username: "Bob",
+      age: 19
+    };
+    obj2[symbol6] = "kkk"; //不能使用点语法
+    for (var key in obj2) {
+      console.log(key); //username
+                        //age 
+    }
+  </script>
+</body>
+
+</html>

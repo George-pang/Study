@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>使用Generator函数给对象认为部署interator接口</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+<body>
+    <!--
+        任意一个对象的Symbol.iterator方法，等于该对象的遍历器生成函数，调用该函数会返回该对象的一个遍历器对象。
+  -->
+    <script>
+        var obj={
+            username:"kobe",
+            age:39
+        }
+        /* start*/
+        // 浏览器报错：因为对象内部没有原生部署iterator接口，不能直接使用for...of遍历
+        // for(var i of obj){
+        //     console.log(i);
+        // }
+        /* end */
+
+        /* 1、对象的Symbol.iterator属性，指向该对象的默认遍历器方法。
+                对象进行for...of循环时，会调用Symbol.iterator方法，返回该对象的默认遍历器对象。
+           2、Generator函数会返回一个遍历器对象，因此可使用Generator函数来作为对象的Symbol.iterator属性，
+                人为给对象部署iterator接口，从而使用for...of遍历(遍历出的值为yield语句后面跟的值)
+           3、任意一个对象的Symbol.iterator方法，等于该对象的遍历器生成函数，调用该函数会返回该对象的一个遍历器对象。
+         */
+         console.log(obj[Symbol.iterator]);//undefined
+         //人为部署
+        obj[Symbol.iterator]=function* myTest(){
+            yield 1;
+            yield 2;
+            yield 3;
+        }
+        console.log(typeof(obj[Symbol.iterator]))
+        // 使用for...of遍历部署iterator接口后的对象
+        for(var i of obj){
+            console.log(i);//1 2 3
+        }
+    </script>
+</body>
+</html>

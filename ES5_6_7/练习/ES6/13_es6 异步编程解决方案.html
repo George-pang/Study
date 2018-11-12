@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6异步编程的2种解决方案</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src="../../jquery.min.js"></script>
+</head>
+
+<body>
+<!--    案例练习
+        需求：
+        1、发送ajax请求获取新闻内容
+        2、新闻内容获取成功后再次发送请求，获取对应的新闻评论内容
+        3、新闻内容获取失败则不需要再次发送请求。 -->
+
+    <script>
+        /* 因为没有后台数据，所以这里只大概看下代码实现原理就行 */
+        //测试代码，忽略即可
+        // let request = new XMLHttpRequest();
+        // console.dir(request);
+        // console.log(typeof(request.response));//string
+
+        /* 1、使用Promise对象解决 */
+        //定义一个请求news的方法---功能：发生ajax请求，获取请求成功的响应数据，并返回promise对象
+        function getNews(url) {
+            //创建一个promise对象，参数1：成功状态回调;参数2：失败状态回调
+            let promise = new Promise((resolve, reject) => {
+                //初始化promise状态为pending
+                //启动异步任务
+                let request = new XMLHttpRequest();
+                request.onreadystatechange = function () {
+                    if (request.readyState === 4) {
+                        if (request.status === 200) {
+                            let news = request.response;//获取请求返回的响应数据
+                            resolve(news);//返回的响应数据作为实参传递给promise实例对象.then方法fullfilled状态时回调的实参
+                        } else {
+                            reject('请求失败了。。。');//实参作为promise实例对象.then rejected状态回调的实参
+                        }
+                    }
+                };
+                request.responseType = 'json'; //设置返回的数据类型
+                request.open("GET", url); //规定请求的类型，创建链接
+                request.send(); //发送请求
+            })
+            return promise;//返回promise对象---只有promise对象才能调用then方法
+        }
+
+        getNews('http://localhost:3000/news?id=2')
+            .then((news) => {
+                console.log(news);
+                //JSON.stringify() 方法用于将 JavaScript 值转换为 JSON 字符串。
+                document.write(JSON.stringify(news));
+                console.log('http://localhost:3000' + news.commentsUrl);
+                return getNews('http://localhost:3000' + news.commentsUrl);//返回promise对象，并将请求成功时的响应数据作为resolve实参传给then()方法的成功回调
+            }, (error) => {
+                alert(error);
+            })
+            .then((comments) => {
+                console.log(comments);
+                document.write('<br><br><br><br><br>' + JSON.stringify(comments));
+            }, (error) => {
+                alert(error);
+            })
+
+
+        /* 2、使用Generator函数解决  */
+        function getNews(url) {
+            $.get(url, function (data) {
+                console.log(data);
+                let commentsUrl = data.commentsUrl;
+                let url = 'http://localhost:3000' + commentsUrl;
+                // 当获取新闻内容成功，发送请求获取对应的评论内容
+                // 调用next传参会作为上次暂停是yield的返回值
+                sx.next(url);//启动第二个yield语句，实参作为上一个yield语句的返回值
+            })
+        }
+
+        function* sendXml() {
+            console.log(111)
+            // url为next传参进来的数据
+            let url = yield getNews('http://localhost:3000/news?newsId=2');//第一次next()时，执行完getNews()，暂停后面代码执行
+            yield getNews(url);
+        }
+
+        let sx = sendXml();//接收generator函数执行返回的遍历器对象
+        // 发送请求获取新闻内容
+        sx.next();//第一次执行next方法时，启动遍历器对象，开始执行函数体代码，
+                    //遇到第一个yield语句时，执行完yield后面的表达式并将值作为返回对象的value属性值，暂停语句后面的操作。
+
+
+        /* 3、使用es2017(es8) aysnc函数 */ 
+            // 案例演示
+        async function getNews(url){
+            return new Promise((resolve,reject)=>{
+                $.ajax({
+                    method:"GET",
+                    url,
+                    success:data=>resolve(data),//es6箭头函数写法
+                    error:function(error){  //es5写法
+                        reject(false); //请求失败，reject将Promise对象状态改为rejected状态
+                    }
+                });
+            })
+        }       
+        async function sendXml(){
+            let result=await getNews("http://localhost:3000/news?id=7"); //await后面为async函数时(返回Pormise对象)，其reslove()或reject()的实参作为await语句的返回值
+            console.log(result);
+            if(!result){alert(result);return;}//如果第一次请求失败，弹出失败信息(reject()实参)，并return停止后面代码的执行
+            result=await getNews("http://localhost:3000"+result.commentsUrl);
+            console.log(result);
+        }
+        // 函数调用
+        sendXml();
+    </script>
+</body>
+
+</html>

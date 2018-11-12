@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6模板字符串--简化字符串拼接</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <p id="demo"></p>
+    <h3>模板字符串-简化字符串拼接</h3>
+    <p style="color:red">
+        * 模板字符串必须用 `` 包裹<br>
+        * 变化的部分(变量)使用 ${xxx} 来定义
+    </p>
+    <p id="demo2"></p>
+
+    <script>
+        /* 
+            1. 模板字符串 : 简化字符串的拼接
+            * 模板字符串必须用  `` 包含
+            * 变化的部分(变量)使用 ${xxx} 定义
+         */
+        var pObj = document.getElementById("demo");
+        var obj = {
+            username: "张三",
+            age: 29
+        };
+        var {
+            username,
+            age
+        } = obj; //解构赋值
+        //1、 "+" 进行字符串拼接
+        var str = "My name is: " + username + " ,my age is: " + age;
+        pObj.innerHTML = str;
+
+        //2、模板字符串
+        var str2 = `My name is ${username} , my age is ${age}`;
+        document.getElementById("demo2").innerHTML = str2;
+    </script>
+</body>
+
+</html>

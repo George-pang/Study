@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6点点点运算符-- rest(可变)参数</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+
+    <script>
+        /* es6点点点运算符 */
+        /* 
+            * 用途
+                1. rest(可变)参数
+                用来取代arguments 但比arguments灵活,只能是最后部分形参参数
+                function add(...values) {
+                    let sum = 0;
+                    for(value of values) {
+                    sum += value;
+                    }
+                    return sum;
+                }
+                2. 扩展运算符
+                let arr1 = [1,3,5];
+                let arr2 = [2,...arr1,6];
+                arr2.push(...arr1);
+         */
+
+        //1、arguments对象
+        function f1(a, b) {
+            console.log(arguments);
+            // arguments.callee属性存着函数的代码
+            console.log(arguments.callee);
+            if (a > 1) {
+                arguments.callee(); //等价于 f1()
+                return false;
+            }
+            //下面代码报错---arguments是类数组，不能调用数组的方法
+            // arguments.forEach(function(ele,index){
+            //     console(ele,index);
+            // })
+
+        }
+        f1(2, 3);
+
+
+        //2、使用点点点运算符 ...关键字，表明是点点点运算符
+        function f2(...value) {
+            console.log(value); //实参数组[2,3,4]，真数组，可以调用数组方法
+            value.forEach(function (ele, index) {
+                console.log("索引" + index + ": " + ele);
+            })
+        }
+        f2(2, 3, 4);
+
+        function f3(a, ...value) { //a占位符，点点点运算符只能放在最后部分参数
+            console.log(value); //实参数组[3,4]，真数组，可以调用数组方法
+            value.forEach(function (ele, index) {
+                console.log("索引" + index + ": " + ele);
+            })
+        }
+        f3(2, 3, 4);
+
+
+        //3、拓展
+        var arr1=[1,6];
+        var arr2=[2,3,4,5];
+        console.log([1,...arr2,6]);//[1, 2, 3, 4, 5, 6]
+    </script>
+</body>
+
+</html>
