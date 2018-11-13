@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 set、map数据结构（存多个数据的容器，类似数组）</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+<body>
+    <!--
+    1. Set容器 : 无序不可重复的多个value的集合体
+    * Set()
+    * Set(array)
+    * add(value)
+    * delete(value)
+    * has(value)
+    * clear()
+    * size
+    2. Map容器 : 无序的 key不重复的多个key-value的集合体
+    * Map()
+    * Map(array)
+    * set(key, value)//添加
+    * get(key)
+    * delete(key)
+    * has(key)
+    * clear()
+    * size
+    -->
+
+    <script>
+        /* set或map容器的size为惰性值，在控制台查看容器内部结构时都是最终值 */
+
+        /* 1、set容器---无序且不可重复的多个value的集合体 */
+        // 生成set数据结构的语法，参数传值
+        var set=new Set([1,2,2,5,2,3,8]);
+        console.log(set);//Set(5) {1, 2, 5, 3, 8}--特性：不可重复，忽略实例化时传入的重复值
+        //set容器的数据个数
+        console.log(set.size);//5
+        set.add(10);//添加数据
+        console.log(set);
+        console.log(set.has(20));//flase判断是否有某个数据
+        console.log(set.has(8));//true
+        set.delete(10)//删除某个数据
+        console.log(set);
+        set.clear();//清空数据
+        console.log(set);
+
+
+        /* 2、map容器--无序的key不可重复的多个key-value的集合体（类二维数组） */
+        var map=new Map([["name","lisi","zhaosi"],["age",18]]);//第二维数组只取前2个元素分别作为key=>value
+        console.log(map);//Map(2) {"name" => "lisi", "age" => 18}
+        //获取map容器数据个数
+        console.log(map.size)//2
+        //添加数据--map.set()
+        map.set("sex","男");
+        console.log(map);//Map(3) {"name" => "lisi", "age" => 18, "sex" => "男"}
+        //删除数据--参数为key
+        map.delete("sex");
+        console.log(map);//Map(2) {"name" => "lisi", "age" => 18}
+        //判断是否有某个数据--参数：key
+        console.log(map.has("sex"));//false
+        // 清空map容器数据
+        map.clear();
+        console.log(map.size);//0
+
+    </script>
+
+</body>
+</html>

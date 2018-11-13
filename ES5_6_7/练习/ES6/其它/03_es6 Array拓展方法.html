@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 数组扩展</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <input type="button" value="按钮1">
+    <input type="button" value="按钮2">
+    <input type="button" value="按钮3">
+    <!--
+    1. Array.from(v) : 将伪数组对象或可遍历对象转换为真数组
+    2. Array.of(v1, v2, v3) : 将一系列值转换成数组
+    3. find(function(value, index, arr){return true}) : 找出第一个满足条件返回true的元素
+    4. findIndex(function(value, index, arr){return true}) : 找出第一个满足条件返回true的元素下标
+    -->
+
+    <script>
+        // 1、Array.from(v) : 将伪数组对象或可遍历对象转换为真数组,从而调用数组方法
+        var btns=document.getElementsByTagName("input");//结果为类数组，不能调用数组的方法
+        Array.from(btns).forEach(function(ele,index){
+            console.log(ele);
+        })
+
+        // 2、Array.of(v1, v2, v3) : 将一系列值转换成数组
+        console.log(Array.of(1,2,4,222,"abc"));// [1, 2, 4, 222, "abc"]
+
+        // 3、find()遍历数组，直到找出第一个满足条件返回true的元素，返回这个元素
+        var arr=[11,9,8,7,23,19,33];
+        var result=arr.find(function(ele,index){
+            return ele>20;
+        });
+        console.log(result);//23
+
+        // 4、findeIndex遍历数组，直到找出第一个满足条件返回true的元素，返回其索引
+        var result=arr.findIndex(function(item,index){
+            return item>20;
+        });
+        console.log(result);//4
+    </script>
+</body>
+
+</html>

@@ -22,7 +22,7 @@
     4、语意上更为明确，使用简单，经临床验证，暂时没有任何副作用
 
 -->
-<script type="text/javascript" src="./js/jquery-1.10.1.min.js"></script>
+<script type="text/javascript" src="../../jquery.min.js"></script>
 <script type="text/javascript">
     async function timeout(ms) {
       return new Promise(resolve => {
@@ -36,14 +36,14 @@
       console.log('延时时间', new Date().toTimeString());
       console.log(value);
     }
-    console.log(asyncPrint());//Promise对象--证明即使没有return语句，async函数也总是返回Promise对象
+    // console.log(asyncPrint());//Promise对象--证明即使没有return语句，async函数也总是返回Promise对象
 
     console.log(asyncPrint('hello async', 2000));//async函数返回的总是Promise对象
     
     // await ---async函数里await的返回值，默认是undefined，怎么设置返回值？
     async function awaitTest() {
       let result = await Promise.resolve('执行成功'); //Promise.resolve('执行成功')简写写法，可以new Promise实例，在回调函数中写
-                                                    //改变Promise状态为fullfilled状态，reslove实参作为await的返回值，为空则为undefined
+                                                    //改变Promise状态为fullfilled状态，reslove/reject实参作为await的返回值，为空则为undefined
       console.log(result);
       let result2 = await Promise.reject('执行失败');
       console.log(result2);//报错 Uncaught (in promise) 执行失败 -----（）
@@ -67,9 +67,10 @@
     }
 
     /* await取代yield，暂停执行，异步执行完后自动开始执行 */
+    //当函数执行的时候，一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句。
     async function getNews(url) {
       // await 异步操作
-      let result = await sendXml(url);
+      let result = await sendXml(url); //正常情况下，await命令后面是一个 Promise 对象。如果不是，就返回对应的值。
       // await 异步操作
       let result2 = await sendXml(url);
       console.log(result, result2);

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 for...of循环</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+<body>
+    <!--
+    es6新增遍历命令，for(let value of target){}循环遍历
+    只有部署了iterator接口的数据结构才能使用for...of来遍历
+    1. 遍历数组
+    2. 遍历Set
+    3. 遍历Map
+    4. 遍历字符串
+    5. 遍历伪数组
+    -->
+
+    <script>
+        // demo：使用set容器和for...of命令来为数组去重
+        var  arr=[1,2,3,2,3,4,5,9,10];
+        var arr1=arr;
+        var arr=[];
+        var set=new Set(arr1);//利用set容器会自动生成去重后的数据集合体特性，并用for...of遍历操作去重后的数据
+        for(var i of set){
+            arr.push(i);
+        }
+        console.log(arr);//(7) [1, 2, 3, 4, 5, 9, 10]
+    </script>
+</body>
+</html>

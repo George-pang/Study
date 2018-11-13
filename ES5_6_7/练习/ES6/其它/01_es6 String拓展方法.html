@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 字符串拓展方法</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <!--
+    1. String.prototype.includes(str) : 判断是否包含指定的字符串
+    2. String.prototype.startsWith(str) : 判断是否以指定字符串开头
+    3. String.prototype.endsWith(str) : 判断是否以指定字符串结尾
+    4. String.prototype.repeat(count) : 重复指定次数
+    -->
+
+    <script>
+        var  str="aanjasjndspla";
+        // 1、includes(str) 参数：指定字符串。判断是否包含指定的字符串
+        console.log(str.includes("ak"));//str中不包含字符串"ak"
+        // 2、startWith(str) 参数：指定字符串，判断是否以指定字符串开头
+        console.log(str.startsWith("a"));//true，str是以字符串a开头
+        // 3、endWith(str) 参数：指定字符串，判断是否以指定字符串结尾
+        console.log(str.endsWith("la"));
+        // 4、repeat(count)将字符串重复指定次数
+        console.log(str.repeat(3));
+    </script>
+</body>
+
+</html>

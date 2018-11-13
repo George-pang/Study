@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 字符串拓展方法</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+<!--
+1. 二进制与八进制数值表示法: 二进制用0b, 八进制用0o
+2. Number.isFinite(i) : 判断是否是有限大的数
+3. Number.isNaN(i) : 判断是否是NaN
+4. Number.isInteger(i) : 判断是否是整数
+5. Number.parseInt(str) : 将字符串转换为对应的数值
+6. Math.trunc(i) : 直接去除小数部分
+-->
+
+    <script>
+        // 二进制，以ox开头
+        console.log(0x1010);
+        //八进制，以0o开头
+        console.log(0o2020);
+        // 判断是否是有限大的数
+        console.log(Number.isFinite(99));////true
+        console.log(Number.isFinite(Infinity));//false
+        // 判断是否是NaN
+        console.log(Number.isNaN(NaN));//true
+        // 判断是否是整数
+        console.log(Number.isInteger(123.111));//false
+        console.log(Number.parseInt("123abc123"));//123
+        console.log(Number("123abc123"));//NaN
+        console.log(Number("123.11"));//123.11
+        // 去除小数部分
+        console.log(Math.trunc(123.222));//123
+    </script>
+</body>
+
+</html>

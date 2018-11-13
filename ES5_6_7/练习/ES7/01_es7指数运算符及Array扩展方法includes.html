@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es7 指数运算符和Array扩展方法includes</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+<body>
+    <!--
+    1. 指数运算符(幂): **
+    2. Array.prototype.includes(value) : 判断数组中是否包含指定value
+
+    -->
+
+    <script>
+        /* 1、指数运算符 **  */
+        console.log(3**3);//27 3的3次方
+
+        /* Array.prototype.includes() 判断数组中是否包含指定数据 */
+        var arr=[1,2,2,444,55,333,77];
+        console.log(arr.includes(444));//true
+        console.log(arr.includes(555));//false
+    </script>
+</body>
+</html>

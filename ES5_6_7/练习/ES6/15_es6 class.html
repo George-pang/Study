@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 class关键字定义类初体验</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+
+    <script>
+        /* 1、class 创建类 */
+        // 创建Person类---
+        class Person {
+            //定义“类”的方法的时候，前面不需要加上function这个关键字，直接把函数定义放进去了就可以了。
+            //定义构造方法
+            constructor(name, age) {
+                this.name = name; //this指当前实例对象
+                this.age = age;
+            }
+            //定义普通方法，方法间不需要逗号分隔，加了会报错
+            showName() {
+                console.log("调用了父类的方法：" + this.name, this.age);
+            }
+        }
+        //实例化Person类对象
+        var p1 = new Person("kobe", 39);
+        p1.showName();
+
+        /* 2、类的继承 */
+        // 创建子类，并继承父类Person--extends关键字组合super()方法实现继承
+        class Children extends Person {
+            constructor(name, age, salary) {
+                super(name, age);
+                this.salary = salary;
+            }
+            // 重定义自己的子类方法(父类同名方法重写)
+            showName() {
+                console.log("调用了子类自己的方法：" + this.name, this.age, this.salary);
+            }
+        }
+        var child = new Children("Bob", 24, 100000);
+        console.log(child);
+        child.showName(); //当子类有自己的showName()方法时，调用自己的方法，否则调用父类的方法
+
+
+        /* 3、事实上， 类的所有方法都定义在类的prototype属性上面*/
+        class Point {
+            constructor() {
+                // ...
+            }
+            toString() {
+                // ...
+            }
+            toValue() {
+                // ...
+            }
+        }
+
+        // 等同于
+        Point.prototype = {
+            constructor() {},
+            toString() {},
+            toValue() {},
+        };
+        var point=new Point();
+        // console.log(point);
+        console.log(point.__proto__==Point.prototype);//true--证明：实例对象的__proto__指向其构造函数/类的prototype
+    </script>
+</body>
+
+</html>
