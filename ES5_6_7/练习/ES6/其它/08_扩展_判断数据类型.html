@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>js 判断数据类型</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+
+    <script>
+        /* 如何判断数据类型：
+            1、typeof 返回值有六种： "String"、"Number"、"Boolean" "Undefined" "Object" "Function"
+            2、Object.prototype.toString.call();---call改变this指向并立即调用--重点测试这个方法
+         */
+
+        var temp=null;
+        console.log(Object.prototype.toString.call(temp));//"[object Null]"
+        console.log(typeof(Object.prototype.toString.call(temp)));//string
+
+        // 假如我们只想要获取Null这个值，则需要对得到的字符串数据进行截取操作slice()方法
+        console.log(Object.prototype.toString.call(temp).slice(8,-1));//"Null"---从第8位截取到最后一位（-1倒数第一位），不包含结束索引上的字符
+
+        // 封装function：检测数据类型
+        function checkType(target){
+            return Object.prototype.toString.call(target).slice(8,-1);
+        }
+
+        console.log(checkType("123"));
+        console.log(checkType(123));
+        console.log(checkType({name:"kobe"}));
+        console.log(checkType([1,2,2,4]));
+        console.log(checkType(undefined));
+        console.log(checkType(null));
+
+
+    </script>
+</body>
+
+</html>

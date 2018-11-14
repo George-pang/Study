@@ -27,7 +27,7 @@
         }
     };
     console.log(obj.fullName);//触发getter函数--当只设置了setter函数时，属性值永远是undefined
-    obj.fullName="JJ cask";//触发setter函数---当只设置了geter函数时，属性值只读
+    obj.fullName="JJ cask";//触发setter函数，"JJ cask"为set函数实参---当只设置了geter函数时，属性值只读
     console.log(obj.fullName);
 
 </script>

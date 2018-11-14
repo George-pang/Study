@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 数组/对象的浅拷贝与深拷贝</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+<!--
+  1、数据类型：
+    * 数据分为基本的数据类型(String, Number, boolean, Null, Undefined)和对象数据类型
+    - 基本数据类型：
+      特点： 存储的是该对象的实际数据
+    - 对象数据类型：
+      特点： 存储的是该对象在栈中引用，真实的数据存放在堆内存里
+  2、复制数据
+    - 基本数据类型存放的就是实际的数据，可直接复制
+      let number2 = 2;
+      let number1 = number2;
+    - 克隆数据：对象/数组
+      1、区别： 浅拷贝/深度拷贝
+         判断： 拷贝是否产生了新的数据还是拷贝的是数据的引用
+         知识点：对象数据存放的是对象在栈内存的引用，直接复制的是对象的引用
+         let obj = {username: 'kobe'}
+         let obj1 = obj; // obj1 复制了obj在栈内存的引用
+      2、常用的拷贝技术
+        1). arr.concat(): 数组浅拷贝
+        2). arr.slice(): 数组浅拷贝
+        3). JSON.parse(JSON.stringify(arr/obj)): 数组或对象深拷贝, 但不能处理函数数据(拷贝不了，显示为null)
+        4). 直接赋值给变量 浅拷贝
+        5). Object.assign(target) 只传目标对象一个参数，等价于直接赋值给变量 浅拷贝
+        6). 浅拷贝包含函数数据的对象/数组
+        7). 深拷贝包含函数数据的对象/数组
+
+  3、浅拷贝/深拷贝---注意：简单数据类型不存在浅拷贝和深拷贝，只有数组/对象才存在浅拷贝和深拷贝
+        浅拷贝：拷贝以后没有生成新的数据，而是拷贝原数据的引用，修改拷贝后的数据会影响到原来的数据
+        深拷贝：拷贝以后生成了新的数据，修改拷贝后的数据不会影响到原来的数据
+-->
+    <script>
+        /* 1、直接赋值给一个变量 */
+        // 沙箱--立即执行函数
+        (function () {
+            var obj = {
+                name: "kobe",
+                age: 39
+            };
+            var obj1 = obj;
+            console.log(obj1); //{name: "kobe", age: 39}
+            obj1.name = "wade";
+            console.log(obj, obj1); //{name: "wade", age: 39} {name: "wade", age: 39}---改变了原来的对象
+
+            var arr = [1, 2, 3, 4, 5];
+            var arr1 = arr;
+            console.log(arr1); //[1, 2, 3, 4, 5]
+            arr1[2] = 9;
+            console.log(arr, arr1); //[1, 2, 9, 4, 5]  [1, 2, 9, 4, 5]---改变了原来的数组
+        }());
+
+        /* 2、Object.assign() 拷贝对象*/
+        //Object.assign() 将源对象obj的可枚举属性复制给目标对象，并返回目标对象
+        (function () {
+            var obj = {
+                name: "kobe",
+                age: 39,
+
+            };
+            var obj1 = {};
+            Object.assign(obj1, obj);
+            console.log(obj1); //{name: "kobe", age: 39}
+            obj1.name = "wade";
+            console.log(obj, obj1); //{name: "kobe", age: 39} {name: "wade", age: 39}---这种写法貌似没有改变源对象的数据
+
+            let obj3 = {
+                name: "kobe"
+            };
+            let obj4 = Object.assign(obj3); //将空对象的可枚举属性复制给目标对象obj3，并返回obj3---这种写法类似于直接赋值:obj4=obj3;
+            console.log(obj4); //{name: "kobe"}
+            obj4.name = "wade";
+            console.log(obj3, obj4); //{name: "wade"} {name: "wade"}----改变了源对象的数据
+
+            let arr = [1, 2, 3];
+            arr1 = Object.assign(arr);
+            console.log(arr1); //[1, 2, 3]
+            arr1[2] = 4;
+            console.log(arr, arr1); //[1, 2, 4] [1, 2, 4]---改变了原数组的数据
+        }());
+
+        /* 3、Array.prototype.concat() */
+        //  concat() 方法用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。
+        (function () {
+            var arr = [1, 2, 3, 4, {
+                name: "kobe"
+            }];
+            var arr1 = arr.concat(); //不带参数，合并本身，并返回一个新数组（重点就是使用其返回的一个浅拷贝）。
+            arr1[3] = 99;
+            console.log(arr, arr1);//[1, 2, 3, 4, {…}]  [1, 2, 3, 99, {…}]---貌似没有改变原数组
+            // (同为number类型的数组中元素，为什么数组直接赋值变量方式就会改变原来数据呢？
+            // 而concat()返回的浅拷贝新数组赋值给变量number类型数据改变却不会改变原数组？是concat()特殊性？)
+            arr1[4].name="wade";
+            console.log(arr, arr1);//[1, 2, 3, 4, {name:"wade"}][1, 2, 3, 99, {name:"wade"}]---改变了原数组中的对象类型数据--证明其为浅拷贝
+        }());
+
+        /* 4、Array.prototype.slice() */
+        // slice() 方法截取数组，返回一个新的数组对象，这一对象是一个由 begin和 end（不包括end）决定的原数组的浅拷贝。原始数组不会被改变。
+        (function(){
+            var arr=[1, 2, 3, 4, {
+                name: "kobe"
+            }];
+            var arr1=arr.slice();//slice()参数为空，截取整个数组并返回新的数组(浅拷贝)
+            arr1[3]=999;
+            arr[4].name="wade";
+            console.log(arr,arr1);  //[1, 2, 3, 4, {name: "wade"}]  [1, 2, 3, 999, {name: "wade"}]
+            // 同concat()方法，改变新数组中简单类型数据不会影响原数组，改变对象类型数据会改变原数组数据
+        }());
+
+
+        /* 5、JSON.parse(JSON.stringify())--深拷贝 */
+        (function(){
+            let arr=[1,2,3,4,{name:"kobe"}];
+            let obj={name:"kobe",age:39};
+            let arr1=JSON.parse(JSON.stringify(arr));
+            let obj1=JSON.parse(JSON.stringify(obj));
+            arr1[3]=999;
+            arr1[4].name="赵四";
+            obj1.name="尼古拉斯";
+            console.log(arr,arr1);//[1, 2, 3, 4, {name: "kobe"}]  [1, 2, 3, 999, {name: "赵四"}]----原数组的数据都没有改变
+            console.log(obj,obj1);//{name: "kobe", age: 39}  {name: "尼古拉斯", age: 39}---原对象的数据都没有改变
+
+            // 这种方法不能赋值function数据（拷贝不了，为null）
+            var arr3=[1,2,{name:"kobe"},function fun(){}];
+            var arr4=JSON.parse(JSON.stringify(arr3));
+            console.log(arr3,arr4);//[1, 2, {name:"kobe"}, ƒ]  [1, 2, {name:"kobe"}, null]
+        }());
+    </script>
+</body>
+
+</html>

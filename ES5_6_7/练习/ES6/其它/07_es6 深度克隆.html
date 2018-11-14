@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6深度克隆</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <h3>深度拷贝：</h3>
+    <p>
+        1、拷贝数据时，首先拿到提供的数据；<br>
+        2、判断其数据类型，若数据为数组或对象类型数据，则遍历该数组/对象,拿到里面的每一项；<br>
+        3、判断其数据类型，若数据为数组或对象类型数据，则遍历该数组/对象,拿到里面的每一项(递归)... <br>
+        4、重复上步操作，一直到拿到的是基本数据类型，再去拷贝，就是深度拷贝。
+    </p>
+    <script>
+        /* 准备1、如何判断数据类型：
+            1、typeof 返回值有六种： "String"、"Number"、"Boolean" "Undefined" "Object" "Function"
+            2、Object.prototype.toString.call();---call改变this指向并立即调用
+         */
+        var temp = null;
+        console.log(Object.prototype.toString.call(temp)); //"[object Null]"
+        console.log(Object.prototype.toString.call(temp).slice(8, -1)); //"Null"---从第8位截取到最后一位（-1倒数第一位），不包含结束索引上的字符
+
+        /* 准备2、测试 for...in 遍历对象、数组 */
+        var obj = {
+            name: "张三",
+            age: 19,
+            sex: "男"
+        };
+        var arr = [1, 2, 33, 44, 555];
+        for (let i in obj) {
+            console.log(i); //遍历对象输出的是对象属性的key
+        }
+        for (let i in arr) {
+            console.log(i); //遍历数组输出的是数组元素的下标
+        }
+
+        /* 3、深度克隆 */
+        // 封装function：检测数据类型,参数：目标数据
+        function checkType(target) {
+            return Object.prototype.toString.call(target).slice(8, -1);
+        }
+        // 遍历数据,深度克隆，参数：目标数据
+        function clone(target) {
+            let result;
+            if (checkType(target) == "Array") { //如果是数组类型数据
+                result = []; //初始化一个空数组
+            } else if (checkType(target) == "Object") {
+                result = {}; //初始化一个空对象
+            } else { //如果是普通数据，则直接返回
+                return target; //递归出口
+            }
+
+            // 遍历数组或对象,验证其内部数据项的数据类型，并一一拷贝给result数组或对象
+            for (let i in target) {
+                // if(checkType(target[i])=="Object"||checkType(target[i])=="Array"){
+                //     result[i]=clone(target[i])
+                // }else{
+                //     result[i]=target[i];
+                // }---这段代码条件判断有点重复，直接简化为下面一句代码
+                result[i] = clone(target[i]); //递归
+            }
+            return result; //如果为数组/对象，则return result(数组/对象)
+        }
+        // 验证函数功能
+        var str = "abanaa";
+        var obj = {
+            name: "kobe",
+            age: 39,
+            sex: "男",
+            son: {
+                name: "Bob",
+                age: 10
+            }
+        };
+        var arr = [1, 2, 3, 4, {
+            name: "kobe"
+        }];
+        var str1 = clone(str);
+        var obj1 = clone(obj);
+        var arr1 = clone(arr);
+        str1 = "ansmasa";
+        obj1.name = "wade";
+        obj1.son.name = "尼古拉斯";
+        arr1[4].name = "赵四";
+        console.log(str, str1); //abanaa ansmasa
+        console.log(obj, obj1); //{name: "kobe", age: 39, sex: "男", son: {name: "Bob", age: 10}}  {name: "wade", age: 39, sex: "男", son: {name: "尼古拉斯", age: 10}}
+        console.log(arr, arr1); // [1, 2, 3, 4, {name: "kobe"}]  [1, 2, 3, 4, {name: "赵四"}]
+        // 经测试，封装后克隆的数据修改不会影响到原数据，深度克隆成功!
+    </script>
+</body>
+
+</html>

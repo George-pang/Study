@@ -9,6 +9,10 @@
     <script src=""></script>
 </head>
 <body>
+    <!-- JSON分为JSON数组和JSON对象
+         JSON.parse() 方法将数据转换为 JavaScript 对象。
+         使用 JSON.stringify() 方法将 JavaScript 对象转换为json字符串。
+    -->
     <script>
         var str="[1,2,3,4]";//数组格式字符串
         str=JSON.parse(str);//转化为JSON对象
@@ -16,6 +20,12 @@
         console.log(str[0]);//仍可以下标获取值
         str=JSON.stringify(str);
         console.log(str,typeof(str));
+
+        var arr=[2,3,4,5];
+        arr=JSON.stringify(arr);
+        console.log(arr);//"[2,3,4,5]"
+        arr=JSON.parse(arr);
+        console.log(arr);//[2, 3, 4, 5]
     </script>
 </body>
 </html>

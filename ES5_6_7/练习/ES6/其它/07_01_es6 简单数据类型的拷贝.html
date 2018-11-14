@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>es6 简单数据类型的拷贝--直接赋值给变量</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <script src=""></script>
+</head>
+
+<body>
+    <!-- 
+    * 数据分为基本的数据类型(String, Number, boolean, Null, Undefined)和对象数据类型
+    - 基本数据类型：
+      特点： 存储的是该对象的实际数据
+          - 基本数据类型存放的就是实际的数据，可直接复制
+          - 基本数据类型改变新数据，不会影响到原来的数据
+      let number2 = 2;
+      let number1 = number2;
+    
+      简单数据类型：
+        拷贝后会生成一个新数据，修改拷贝以后的数据不会影响到原来的数据
+      对象/数组：
+        拷贝后不会生成新的数据，而是拷贝数据的引用，修改拷贝以后的数据会影响到原数据
+     -->
+    <script>
+        /* 1、简单数据类型的拷贝--直接赋值给一个变量 */
+        // String
+        var str = "ananama";
+        var str2 = str;
+        console.log(str2); //ananama
+        str2 = "ababab";
+        console.log("拷贝数据现为：" + str2 + ",原数据为：" + str); //拷贝数据现为：ababab,原数据为：ananama ---简单数据类型拷贝，修改拷贝后的数据不会修改原数据
+        // Number
+        var num = 19;
+        var num2 = num;
+        console.log(num2); //19
+        num2 = 30;
+        console.log("拷贝数据现为：" + num2 + "，原数据为：" + num); //拷贝数据现为：30，原数据为：19---没有改变原数据
+        // Boolean
+        var bool1 = true;
+        var bool2 = bool1;
+        console.log(bool2); //true
+        bool2 = false;
+        console.log("拷贝数据现为：" + bool2 + ",原数据为：" + bool1); //拷贝数据现为：false,原数据为：true---没有改变原数据
+    </script>
+</body>
+
+</html>
