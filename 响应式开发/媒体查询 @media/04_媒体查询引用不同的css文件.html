@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>媒体查询调用不同的css文件</title>
+    <!-- 媒体查询引用不同的css文件 用法 -->
+    <link rel="stylesheet" href="a.css">
+    <link rel="stylesheet" type="text/css" media="screen and (min-width:992px) and (max-width:1200px)" href="b.css" />
+    <!-- 注意：当媒体查询为true时，其对应的样式表或样式规则就会遵循正常的级联规则进行应用。
+        即使媒体查询返回false，<link> 标签指向的样式表也将会被下载(但是它们不会被应用)-->
+    <script src=""></script>
+    </style>
+</head>
+<body>
+    
+</body>
+</html>

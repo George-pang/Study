@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>@media 媒体查询的书写顺序---宽度区间有交集时</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+    <style>
+        body{
+            background-color: red;
+        }
+        @media screen and (min-width:768px){
+            body{
+                background-color: green;
+            }
+        }
+        @media screen and (min-width:992px){
+            body{
+                background-color: purple;
+            }
+        }
+        @media screen and (min-width:1200px){ /* 最小宽度1200px，即宽度大于1200px */
+            body{
+                background-color: pink;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <h4>当媒体查询的宽度区间有交集时，就需要注意媒体查询的书写顺序(后写的样式会覆盖前面的)</h4>
+    <p> 当判断最小值(min-width)时，应该从小往大写</p>
+    <!-- /*当判断最小的值，并且从小到大进行判断(当满足条件的时候)：
+    1.向上兼容：如果设置了宽度更小时的样式，默认这些样式也会传递到宽度更大的条件范围内
+    2.向下覆盖：宽度更大的样式会将前面宽度更小的样式覆盖*/
+    /*985px  1150px*/
+
+    /*书写建议：
+    1.如果是判断最小值 (min-width)，那么就应该从小到大写--bootstrap就是判断最小值，从小到大写
+    2.如果是判断最大值 (max-width)，那么就应该从大到小写*/ -->
+</body>
+</html>

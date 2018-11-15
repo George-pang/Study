@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- 移动端适配，设置移动端布局视口 layout viewport宽度 -->
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>响应式开发之CSS3媒体查询@media--严格区分宽度区间（没有交集）</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+    <style>
+        body {
+            background-color: green;
+        }
+
+        /*  严格区分宽度区间（没有交集），所以媒体查询的书写顺序对样式没有影响  */
+        /* @media screen and (max-width:768px) {
+            body {
+                background-color: green;
+            }
+        } */
+
+        @media screen and (min-width:768px) and (max-width:992px) {
+            body {
+                background-color: blue;
+            }
+        }
+
+        @media screen and (min-width:992px) and (max-width:1200px) {
+            body {
+                background-color: pink;
+            }
+        }
+
+        @media screen and (min-width:1200px) {
+            body {
+                background-color: purple;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 需求：
+        1、屏幕宽度<768px,背景色为绿色;
+        2、大于768、小于992为蓝色;
+        3。大于992、小于1200为粉色；
+        4、大于1200为紫色。
+    -->
+    CSS3 媒体查询语法：<br>
+    @media mediatype and|not|only (media feature) {
+    CSS-Code;
+    }
+
+
+    <script>
+
+    </script>
+</body>
+
+</html>

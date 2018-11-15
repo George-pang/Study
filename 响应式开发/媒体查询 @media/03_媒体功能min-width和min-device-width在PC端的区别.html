@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>媒体功能min-width和min-device-width在PC端的区别</title>
+    <link rel="stylesheet" type="text/css" href="" />
+    <script src=""></script>
+    <style>
+        body{
+            background-color: pink;
+        }
+        /* 1、min-wdith */
+        /* @media screen and (min-width:768px){
+            body{
+                background-color: green;
+            }
+        }
+        @media screen and (min-width:992px){
+            body{
+                background-color: blue;
+            }
+        } */
+        /* 结论：min-width(可视区域的最小宽度)在PC端和移动端都能正常的响应，效果一致 */
+
+        /* 2、min-device-width */
+        @media screen and (min-device-width:768px){
+            body{
+                background-color: green;
+            }
+        }
+        @media screen and (min-device-width:992px){
+            body{
+                background-color: blue;
+            }
+        }
+        /* 结论：min-device-width(当前设备的最小屏幕可见宽度) 只与设备的最小屏幕可见宽度有关，而与浏览器的窗口大小无关，在PC端拖放浏览器窗口大小无法响应*/
+    </style>
+</head>
+<body>
+    
+</body>
+</html>
