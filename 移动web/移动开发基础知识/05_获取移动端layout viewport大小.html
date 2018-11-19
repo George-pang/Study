@@ -13,10 +13,11 @@
 <body>
     <h3>
         不同移动设备一般都默认设置了布局视口layout viewport，一般都比移动设备的宽度要大(980px)居多，
-        所以移动端开发需要在meta标签对layout viewport进行设置
+        所以移动端开发需要在meta标签对layout viewport进行适配设置
     </h3>
 
     <script>
+        /* 视口影响html的大小，布局视口的大小就是html的大小 */
         document.write("当前设备的layout viewport宽度为："+document.documentElement.clientWidth+"高度为："+document.documentElement.clientHeight);
     </script>
 </body>
