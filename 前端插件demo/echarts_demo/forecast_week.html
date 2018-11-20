@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <title>一周预报</title>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="echarts.js"></script>
+    <style type="text/css">
+        /*公用样式*/
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html{
+            min-height: 100%;
+        }
+
+        body{
+            background-color: #f5f5f5;
+            padding-top: 44px;
+            background: -webkit-linear-gradient(-45deg,
+            #02b3ff 0%,
+            #0271ff 100%);
+            background: -ms-linear-gradient(-45deg,
+            #02b3ff 0%,
+            #0271ff 100%);
+            background: -o-linear-gradient(-45deg,
+            #02b3ff 0%,
+            #0271ff 100%);
+            background: -moz-linear-gradient(-45deg,
+            #02b3ff 0%,
+            #0271ff 100%);
+            font-family: PingFang-SC-Medium;
+        }
+        html,body{
+            font-family: PingFang-SC-Medium;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        a{
+            text-decoration: none;
+        }
+        img{
+            vertical-align: middle; /*去除图片与外层块底部缝隙*/
+        }
+        ul{
+            list-style: none;
+        }
+
+        /*顶部标题栏样式*/
+        .page-hd{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 44px;
+            line-height: 44px;
+            font-size: 18px;
+            color: #333;
+            background-color: #fff;
+            display: flex;
+            z-index: 999;
+        }
+        .page-hd .back{
+            width: 44px;
+            height: 100%;
+            vertical-align: middle;
+        }
+        .page-hd .back a{
+            display: block;
+            text-align: center;
+        }
+        .page-hd img{
+            width: 24px;
+            height: auto;
+        }
+        .page-hd .pg-title{
+            /*margin-left: 10px;*/
+            vertical-align: middle;
+        }
+        .container{
+            margin-top: 34px;
+            padding: 0 10px;
+        }
+        .container .nav-hd{
+            display: flex;
+        }
+        .nav-hd .nav-hd-item{
+            flex: 1;
+            margin: 0 5px;
+            padding: 11px 0;
+            font-size: 16px;
+            line-height: 1em;
+            letter-spacing: 0;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid #fff;
+        }
+        .cur{
+            color: #02b3ff!important;
+            background-color: #fff;
+        }
+        .line-box{
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+
+        }
+        .line-box::before{
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #fff;
+        }
+        .nav-bd{
+            position: relative;
+            /*margin-top: 20px;*/
+            width: 100%;
+        }
+        /*.nav-bd::before{*/
+        /*content: "";*/
+        /*position: absolute;*/
+        /*top: -1px;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*height: 1px;*/
+        /*background-color: #fff;*/
+        /*}*/
+        .nav-bd-item{
+            width: 100%;
+            display: none;
+        }
+        .current{
+            display: block;
+        }
+        .weather-trend {
+            position: relative;
+        }
+        .weather-trend::before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+        }
+        .weather-trend::after{
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translate(-50%,0);
+            width: 0;
+            height: 0;
+            border-top:5px solid #fff;
+            border-left:5px solid transparent;
+            border-right:5px solid transparent;
+        }
+        .weather-trend .title{
+            padding-top: 10px;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+        }
+        .weather-trend .desc{
+            margin-top: 25px;
+            padding: 0 8px;
+            font-size: 14px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-hd">
+        <div class="back">
+            <a href="#">
+                <img src="back.png" alt="">
+            </a>
+        </div>
+        <span class="pg-title">一周预报</span>
+    </div>
+    <div class="container">
+        <ul class="nav-hd">
+            <li class="nav-hd-item cur">昌江区</li>
+            <li class="nav-hd-item">珠山区</li>
+            <li class="nav-hd-item">乐平市</li>
+            <li class="nav-hd-item">浮梁县</li>
+        </ul>
+        <div class="line-box">
+            <div id="main" class="line" style="width: 100%;height: 280px;"></div>
+        </div>
+        <div class="nav-bd">
+            <div class="nav-bd-item current">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气逐渐转好，最高气温可达35度左右，早晚气温适宜。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气良好，适合出游。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气晴朗。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气逐渐转好，局部地区有小雨，早晚气温适宜。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 基于准备好的dom，初始化一个echarts实例
+        var myChart=echarts.init(document.getElementById("main"));
+        //创建个JSon对象，存储背景图
+        var weatherIcons = {
+            'Sunny': 'qingtian.png',
+            'Cloudy': 'duoyun.png',
+            'LightRain': 'xiaoyu.png',
+            'Showers': 'zhenyu.png',
+            'HeavyRain': 'dayu.png',
+            'Overcast': 'yintian.png',
+        };
+        //根据传入的data3数据选择相对应的图片，作为x轴刻度标签的背景图
+        function setLine(data1,data2,data3) {
+            var str = [];
+            var temp = "";
+            for (var i = 0; i < data3.length; i++) {
+                switch (data3[i]) {
+                    case "晴":
+                        temp = weatherIcons.Sunny;
+                        break;
+                    case "多云":
+                        temp = weatherIcons.Cloudy;
+                        break;
+                    case "小雨":
+                        temp = weatherIcons.LightRain;
+                        break;
+                    case "阵雨":
+                        temp = weatherIcons.Showers;
+                        break;
+                    case "大雨":
+                        temp = weatherIcons.HeavyRain;
+                        break;
+                    case "阴":
+                        temp = weatherIcons.Overcast;
+                        break;
+                }
+                str.push(temp);
+            }
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {      //提示框组件
+                    trigger: 'axis'
+                },
+                // backgroundColor: '#413b41',
+                backgroundColor: 'rgba(0,0,0,.2)',  //背景色
+                color:['#f44336','#ffeb3b'],        //颜色
+                legend: {                           //图例组件--可以通过点击图例控制哪些系列不显示。(eg：折线图中几个图例就有几条折线)
+                    data:['最高气温','最低气温'],
+                    // orient:'vertical',       //图例文字排列方向
+                    textStyle:{         //修改图例中文字颜色
+                        color:'#fff'
+                    },
+                },
+                textStyle:{   //修改全局文字颜色
+                    color:'#fff'
+                },
+                grid:{          //绘图网格--图表
+                    bottom:65,  // 图表距离容器下方边距,默认60
+                    top:60      //图标距离上方边距--图例文字位置不受影响
+                },
+                xAxis: { //设置x轴
+                    type: 'category',       //坐标轴类型，可选：'value' 数值轴  'category' 类目轴  'time' 时间轴  'log' 对数轴
+                    boundaryGap: false,     //坐标轴两边留白策略,类目轴中 boundaryGap 可以配置为 true 和 false。默认为 true，这时候刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间。
+                    data: ['Mon', 'Tue', 'Wed','Thu','Fri','Sat','Sun'],  //类目数据，在类目轴（type: 'category'）中有效。
+                    axisLine: {                     //坐标轴轴线相关设置。
+                        show: false //是否显示坐标轴轴线。
+                    },
+                    axisTick: {                     //坐标轴刻度相关设置。
+                        show: false,  //是否显示坐标轴刻度。
+                        interval:0      //坐标轴刻度的显示间隔，在类目轴中有效。默认同 axisLabel.interval 一样。
+                    },
+                    axisLabel: {   //坐标轴刻度标签的相关设置。刻度标签--即轴线下的文字
+                        formatter: function (value) {       //???刻度标签的内容格式器，支持字符串模板和回调函数两种形式。
+                            return '{' + value + '| }\n{value|' + value + '}';
+                        },
+                        interval:0, //设置成 0 强制显示所有标签。
+                        margin: 20, //刻度标签与轴线之间的距离。
+                        rich: {     //在 rich 里面，可以自定义富文本样式。--图片+文字
+                            value: {
+                                lineHeight: 20,
+                                align: 'center'
+                            },
+                            Mon: {         //这里的键名要与data属性中的数组元素要对应
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[0]
+                                }
+                            },
+                            Tue: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[1]
+                                }
+                            },
+                            Wed: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[2]
+                                }
+                            },
+                            Thu: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[3]
+                                }
+                            },
+                            Fri: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[4]
+                                }
+                            },
+                            Sat: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[5]
+                                }
+                            },
+                            Sun: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: str[6]
+                                }
+                            },
+                        }
+                    },
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} °C'
+                    },
+                    show: false,
+                    // max:60,//设置y轴最大值为60
+                    // min:-20,
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                    }
+                },
+                series: [           //系列列表。每个系列通过 type 决定自己的图表类型
+                    {
+                        name:'最高气温',
+                        type:'line',    //折线图
+                        data:data1,
+                        smooth: true,//圆滑线条
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#f44336'
+                        },
+                    },
+                    {
+                        name:'最低气温',
+                        type:'line',
+                        data:data2,
+                        smooth: true,
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#ffeb3b'
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。---echarts实例对象的setOption()方法
+            myChart.setOption(option);
+        }
+        var data1=[32, 33, 34, 38, 29, 30, 30];
+        var data2=[26, 26, 25, 25, 23, 22, 21];
+        var data3=["晴","阵雨","大雨","晴","晴","多云","阴"];
+        setLine(data1,data2,data3);
+    </script>
+    <script>
+        $(function () {
+            $(".nav-hd-item").click(function () {
+                $(this).addClass("cur").siblings().removeClass("cur");
+                var idx=$(this).index();
+                $(".nav-bd-item").eq(idx).addClass("current").siblings().removeClass("current");
+                switch (idx) {
+                    case 0:                                                      //第一个市/区
+                        data1=[32, 33, 34, 38, 29, 30, 30];                      //一周最高温
+                        data2=[26, 26, 25, 25, 23, 22, 21];                      //一周最低温
+                        data3=["晴","阵雨","大雨","晴","晴","多云","阴"];          //一周天气情况
+                        break;
+                    case 1:
+                        data1=[32, 33, 35, 33, 29, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        data3=["晴","晴","晴","晴","晴","晴","晴"];
+                        break;
+                    case 2:
+                        data1=[32, 33, 35, 33, 39, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        data3=["晴","大雨","阵雨","阵雨","阵雨","阵雨","阵雨"];
+                        break;
+                    case 3:
+                        data1=[32, 33, 35, 33, 40, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        data3=["晴","多云","多云","多云","多云","多云","多云"];
+                        break;
+                }
+                setLine(data1,data2,data3);
+            })
+        })
+    </script>
+</body>
+</html>

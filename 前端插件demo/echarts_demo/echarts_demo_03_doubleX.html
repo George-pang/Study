@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <title>一周预报</title>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="echarts.js"></script>
+</head>
+<body>
+    <div id="main" class="line" style="width: 100%;height: 280px;"></div>
+    <script>
+        // 基于准备好的dom，初始化一个echarts实例
+        var myChart=echarts.init(document.getElementById("main"));
+        function setLine(data1,data2) {
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                // backgroundColor: '#413b41',
+                backgroundColor: '#fff',
+                color:['#f44336','#ffeb3b'],
+                // legend: {
+                //     data:['最高气温','最低气温'],
+                //     // orient:'vertical',
+                //     textStyle:{         //修改图例中文字颜色
+                //         color:'#000'
+                //     },
+                // },
+                textStyle:{   //修改全局文字颜色
+                    color:'#000'
+                },
+                grid:{
+                    bottom:30, // 图表距离容器下方边距,默认60
+                    top:30
+                },
+                xAxis: [{ //设置双x轴
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                    axisLine: {
+                        show: true //是否显示坐标轴轴线。
+                    },
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                    }},{
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['1', '2', '3', '4', '5', '6', '7'],
+                    axisLine: {
+                        show: true //是否显示坐标轴轴线。
+                    },
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                    }
+                }],
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} °C'
+                    },
+                    show:true,
+                    // max:60,//设置y轴最大值为60
+                    // min:-20,
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                    }
+                },
+                series: [
+                    {
+                        name:'最高气温',
+                        type:'line',
+                        data:data1,
+                        smooth: true,//圆滑线条
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#f44336'
+                        },
+                    },
+                    {
+                        name:'最低气温',
+                        type:'line',
+                        data:data2,
+                        smooth: true,
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#ffeb3b'
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。---echarts实例对象的setOption()方法
+            myChart.setOption(option);
+        }
+        var data1=[32, 33, 34, 38, 29, 30, 30];
+        var data2=[26, 26, 25, 25, 23, 22, 21];
+        setLine(data1,data2);
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <p>111111111111111111111111</p>
+    <!-- class＝"bdsharebuttonbox" 部分为dom选择器 -->
+    <!-- data-tag属性为分享按钮标识，用于实现同一页面中多分享按钮的不同配置，详见设置部分。 -->
+    <div class="bdsharebuttonbox" data-tag="share_1">
+        <a class="bds_mshare" data-cmd="mshare"></a> <!-- class属性使用预定义类样式，data-cmd属性取分享的目标 -->
+        <a class="bds_weixin" data-cmd="weixin" href="#"></a>
+        <a class="bds_tsina" data-cmd="tsina"></a>
+        <a class="bds_huaban" data-cmd="huaban"></a>
+        <a class="bds_douban" data-cmd="douban"></a>
+        <a class="bds_duitang" data-cmd="duitang"></a>
+        <a class="bds_more" data-cmd="more">更多</a>
+        <a class="bds_count" data-cmd="count"></a> <!-- data-cmd值为count时展现分享数 -->
+        <!-- data-cmd属性为分享目标标识，取值请参见：分享媒体id对应表。此外值为more时点击展现更多弹窗，值为count时展现分享数。 -->
+    </div>
+    <script>
+        window._bd_share_config = {
+            common: {   //通用设置,将作用于所有分享类型，可将通用设置放于此处，如分享内容、分享url等。
+                bdText: '自定义分享内容',
+                bdDesc: '自定义分享摘要',
+                bdUrl: '自定义分享url地址',
+                bdPic: '自定义分享图片'
+            },
+            share: [{   //分享按钮设置
+                "bdSize": 16  //分享按钮大小
+            }],
+            slide: [{   //右侧浮窗分享的设置
+                bdImg: 0,
+                bdPos: "right",
+                bdTop: 100
+            }],
+            image: [{   //图片分享设置
+                viewType: 'list',
+                viewPos: 'top',
+                viewColor: 'black',
+                viewSize: '16',
+                viewList: ['qzone', 'tsina', 'huaban', 'tqq', 'renren']
+            }],
+            selectShare: [{ //划词分享设置---bug：设置的分享按钮类型和顺序没起作用？？
+                "bdselectMiniList": ['qzone','douban', 'tsina', 'weixin', 'tqf'] //自定义划词后弹出浮层中的分享按钮类型和排列顺序。
+            }]
+        }
+        with(document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src =
+            'http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+</body>
+
+</html>

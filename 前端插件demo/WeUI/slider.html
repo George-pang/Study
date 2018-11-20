@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引入weui -->
+    <link rel="stylesheet" href="./css/weui.css">
+    <script src="js/zepto.min.js"></script>
+    <style>
+        .weui-slider-box{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 使用 -->
+    <a href="javascript:;" class="weui-btn weui-btn_primary">绿色按钮</a>
+
+    <!-- <div class="page slider js_show"> -->
+
+            <div class="weui-slider-box">
+                <div class="weui-slider">
+                    <div id="sliderInner" class="weui-slider__inner">
+                        <div id="sliderTrack" style="width: 63%;" class="weui-slider__track"></div>
+                        <div id="sliderHandler" style="left: 63%;" class="weui-slider__handler"></div>
+                    </div>
+                </div>
+                <div id="sliderValue" class="weui-slider-box__value">50</div>
+            </div>
+
+    <!-- </div> -->
+
+    <script type="text/javascript" class="slider js_show">
+        $(function(){
+            var $sliderTrack = $('#sliderTrack'),
+                $sliderHandler = $('#sliderHandler'),
+                $sliderValue = $('#sliderValue');
+    
+            var totalLen = $('#sliderInner').width(),
+                startLeft = 0,
+                startX = 0;
+    
+            $sliderHandler
+                .on('touchstart', function (e) {
+                    startLeft = parseInt($sliderHandler.css('left')) * totalLen / 100;
+                    startX = e.changedTouches[0].clientX;
+                })
+                .on('touchmove', function(e){
+                    var dist = startLeft + e.changedTouches[0].clientX - startX,
+                        percent;
+                    dist = dist < 0 ? 0 : dist > totalLen ? totalLen : dist;
+                    percent =  parseInt(dist / totalLen * 100);
+                    $sliderTrack.css('width', percent + '%');
+                    $sliderHandler.css('left', percent + '%');
+                    $sliderValue.text(percent);
+
+                    e.preventDefault();
+                })
+            ;
+        });
+    </script>
+</body>
+</html>

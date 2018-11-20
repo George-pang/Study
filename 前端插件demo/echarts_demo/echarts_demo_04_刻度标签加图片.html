@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
+    <title>一周预报</title>
+    <script src="jquery-1.12.4.min.js"></script>
+    <script src="echarts.js"></script>
+    <style type="text/css">
+        .container{
+            margin-top: 34px;
+            padding: 0 10px;
+        }
+        .container .nav-hd{
+            display: flex;
+        }
+        .nav-hd .nav-hd-item{
+            flex: 1;
+            margin: 0 5px;
+            padding: 11px 0;
+            font-size: 16px;
+            line-height: 1em;
+            letter-spacing: 0;
+            color: #fff;
+            text-align: center;
+            border-radius: 3px;
+            border: 1px solid #fff;
+        }
+        .cur{
+            color: #02b3ff!important;
+            background-color: #fff;
+        }
+        .line-box{
+            position: relative;
+            margin-top: 20px;
+            width: 100%;
+
+        }
+        .line-box::before{
+            content: "";
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #fff;
+        }
+        .nav-bd{
+            position: relative;
+            /*margin-top: 20px;*/
+            width: 100%;
+        }
+        .nav-bd-item{
+            width: 100%;
+            display: none;
+        }
+        .current{
+            display: block;
+        }
+        .weather-trend {
+            position: relative;
+        }
+        .weather-trend::before{
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #fff;
+        }
+        .weather-trend::after{
+            content: "";
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translate(-50%,0);
+            width: 0;
+            height: 0;
+            border-top:5px solid #fff;
+            border-left:5px solid transparent;
+            border-right:5px solid transparent;
+        }
+        .weather-trend .title{
+            padding-top: 10px;
+            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+        }
+        .weather-trend .desc{
+            margin-top: 25px;
+            padding: 0 8px;
+            font-size: 14px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav-hd">
+            <li class="nav-hd-item cur">昌江区</li>
+            <li class="nav-hd-item">珠山区</li>
+            <li class="nav-hd-item">乐平市</li>
+            <li class="nav-hd-item">浮梁县</li>
+        </ul>
+        <div class="line-box">
+            <div id="main" class="line" style="width: 100%;height: 280px;"></div>
+        </div>
+        <div class="nav-bd">
+            <div class="nav-bd-item current">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气逐渐转好，最高气温可达35度左右，早晚气温适宜。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气良好，适合出游。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气晴朗。</div>
+                </div>
+            </div>
+            <div class="nav-bd-item">
+                <div class="weather-trend">
+                    <div class="title">天气趋势</div>
+                    <div class="desc">未来一周我市天气逐渐转好，局部地区有小雨，早晚气温适宜。</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 基于准备好的dom，初始化一个echarts实例
+        var myChart=echarts.init(document.getElementById("main"));
+        function setLine(data1,data2) {
+            // 指定图表的配置项和数据
+            var weatherIcons = {
+                'Sunny': 'qingtian.png',
+                'Cloudy': 'duoyun.png',
+                'LightRain': 'xiaoyu.png',
+                'Showers': 'zhenyu.png',
+                'HeavyRain': 'dayu.png',
+                'Overcast': 'yintian.png',
+            };
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                // backgroundColor: '#413b41',
+                backgroundColor: 'rgba(0,0,0,.2)',
+                color:['#f44336','#ffeb3b'],
+                legend: {
+                    data:['最高气温','最低气温'],//图例的数据数组。数组项通常为一个字符串，每一项代表一个系列的 name（如果是饼图，也可以是饼图单个数据的 name）
+                    // orient:'vertical',
+                    textStyle:{         //修改图例中文字颜色
+                        color:'#fff'
+                    },
+                },
+                textStyle:{   //修改全局文字颜色
+                    color:'#fff'
+                },
+                grid:{
+                    bottom:65, // 图表距离容器下方边距,默认60
+                    top:60     //图标距离上方边距--图例文字位置不受影响
+                },
+                xAxis: { //设置x轴
+                    type: 'category',
+                    boundaryGap: false,
+                    data: ['Mon', 'Tue', 'Wed','Thu','Fri','Sat','Sun'],
+                    axisLine: {
+                        show: false //是否显示坐标轴轴线。
+                    },
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                        interval:0
+                    },
+                    axisLabel: {   //刻度标签--即轴线下的文字
+                        formatter: function (value) {   //刻度标签的内容格式器，支持字符串模板和回调函数两种形式。
+                        // 使用字符串模板，模板变量为刻度默认标签 {value}
+                        // 使用函数模板，函数参数则分别为刻度数值（类目），刻度的索引
+                            return '{' + value + '| }\n{value|' + value + '}';
+                        },
+                        interval:0, //设置成 0 强制显示所有标签。
+                        margin: 20,
+                        rich: { //在 rich 里面，可以自定义富文本样式。
+                            value: {
+                                lineHeight: 20,
+                                align: 'center'
+                            },
+                            Mon: {         //与data中的数组元素要对应
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Sunny
+                                }
+                            },
+                            Tue: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Cloudy
+                                }
+                            },
+                            Wed: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Overcast
+                                }
+                            },
+                            Thu: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.HeavyRain
+                                }
+                            },
+                            Fri: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Showers
+                                }
+                            },
+                            Sat: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Cloudy
+                                }
+                            },
+                            Sun: {
+                                height: 20,
+                                align: 'center',
+                                backgroundColor: {
+                                    image: weatherIcons.Sunny
+                                }
+                            },
+                        }
+                    },
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: '{value} °C'
+                    },
+                    show: false,
+                    // max:60,//设置y轴最大值为60
+                    // min:-20,
+                    axisTick: {
+                        show: false,  //是否显示坐标轴刻度。
+                    }
+                },
+                series: [
+                    {
+                        name:'最高气温',
+                        type:'line',
+                        data:data1,
+                        smooth: true,//圆滑线条
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#f44336'
+                        },
+                    },
+                    {
+                        name:'最低气温',
+                        type:'line',
+                        data:data2,
+                        smooth: true,
+                        itemStyle : { normal: {label : {show: true}}},
+                        lineStyle:{
+                            color:'#ffeb3b'
+                        }
+                    }
+                ]
+            };
+
+            // 使用刚指定的配置项和数据显示图表。---echarts实例对象的setOption()方法
+            myChart.setOption(option);
+        }
+        var data1=[32, 33, 34, 38, 29, 30, 30];
+        var data2=[26, 26, 25, 25, 23, 22, 21];
+        setLine(data1,data2);
+    </script>
+    <script>
+        $(function () {
+            $(".nav-hd-item").click(function () {
+                $(this).addClass("cur").siblings().removeClass("cur");
+                var idx=$(this).index();
+                $(".nav-bd-item").eq(idx).addClass("current").siblings().removeClass("current");
+                console.log(idx);
+                switch (idx) {
+                    case 0:
+                        var data1=[32, 33, 34, 38, 29, 30, 30];
+                        var data2=[26, 26, 25, 25, 23, 22, 21];
+                        break;
+                    case 1:
+                        data1=[32, 33, 35, 33, 29, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        break;
+                    case 2:
+                        data1=[32, 33, 35, 33, 39, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        break;
+                    case 3:
+                        data1=[32, 33, 35, 33, 40, 30, 30];
+                        data2=[25, 23, 28, 25, 23, 22, 21];
+                        break;
+                }
+                setLine(data1,data2);
+            })
+        })
+    </script>
+</body>
+</html>

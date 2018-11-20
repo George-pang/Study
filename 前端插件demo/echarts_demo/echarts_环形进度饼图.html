@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用echarts实现环形进度条饼图</title>
+    <script src="echarts.min.js"></script>
+    <style>
+        #course-progress{
+            width: 160px;
+            height: 160px;
+            margin: 100px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="course-progress"></div>
+    <script>
+        // 饼状进度图
+        // 基于准备好的dom，初始化echarts实例
+        var e = 80;
+        var myChart = echarts.init(document.getElementById('course-progress'));
+        option = {
+            title: { //标题
+                show: true,
+                text: e + '%',
+                subtext: '学习进度',
+                top: 'center',//位置
+                left: 'center',
+                itemGap: 5, //主副标题的间距
+                textStyle: {
+                    fontSize: '24',
+                    color: '#43bc60',
+                    fontWeight: 'normal'
+                }
+            },
+            tooltip: { //提示框组件
+                trigger: 'item',
+                // formatter: "{d}%",
+                // formatter: "{a} <br/>{b}: {c} ({d}%)",
+                formatter: "{a} <br/>{b}: {c}%", //提示框浮层内容格式器，支持字符串模板和回调函数两种形式。
+                //模板变量有 {a}, {b}，{c}，{d}，{e},不同图表类型下的 {a}，{b}，{c}，{d} 含义不一样.
+                //饼图:{a}（系列名称），{b}（数据项名称），{c}（数值）, {d}（百分比）
+                show: true
+            },
+            legend: { //图例组件--可以通过点击图例控制哪些系列不显示。 legend中的data始终和 series中的data的name对应.
+                orient: 'vertical',
+                x: 'left',
+                show: false
+                //如果legend.data 没有被指定，会自动从当前系列中获取。
+                //多数系列会取自 series.name 或者 series.encode 的 seriesName 所指定的维度。如 饼图 and 漏斗图 等会取自 series.data 中的 name。
+            },
+            series: { //系列列表
+                name: '学习进度',
+                type: 'pie',
+                radius: ['65%', '85%'],//饼图的半径。可为Number、String、Array，数组的第一项是内半径，第二项是外半径，可以将内半径设大显示成圆环图
+                avoidLabelOverlap: true,
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                data: [{
+                        value: e,
+                        name: '已完成'
+                    },
+                    {
+                        value: 100 - e,
+                        name: '未完成'
+                    }
+                ]
+            },
+            color: ['#43bc60', '#999']//调色盘颜色列表。如果系列没有设置颜色，则会依次循环从该列表中取颜色作为系列颜色。
+        };
+        myChart.setOption(option);
+    </script>
+</body>
+
+</html>

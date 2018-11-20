@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- 引入weui -->
+    <link rel="stylesheet" href="./css/weui.css">
+    <!-- 引入js依赖 -->
+    <script src="js/zepto.min.js"></script>
+
+</head>
+
+<body>
+    <!-- 使用 -->
+    <div class="weui-progress">
+        <div class="weui-progress__bar">
+            <div class="weui-progress__inner-bar js_progress" style="width: 0%;"></div>
+        </div>
+        <a href="javascript:;" class="weui-progress__opr">
+            <i class="weui-icon-cancel"></i>
+        </a>
+    </div>
+    <br>
+    <div class="weui-progress">
+        <div class="weui-progress__bar">
+            <div class="weui-progress__inner-bar js_progress" style="width: 90%;"></div>
+        </div>
+        <a href="javascript:;" class="weui-progress__opr">
+            <i class="weui-icon-cancel"></i>
+        </a>
+    </div>
+    <br>
+    <div class="weui-progress">
+        <div class="weui-progress__bar">
+            <div class="weui-progress__inner-bar js_progress" style="width: 80%;"></div>
+        </div>
+        <a href="javascript:;" class="weui-progress__opr">
+            <i class="weui-icon-cancel"></i>
+        </a>
+    </div>
+    <div class="weui-btn-area">
+        <a href="javascript:;" class="weui-btn weui-btn_primary" id="btnUpload">上传</a>
+    </div>
+
+    <script type="text/javascript" class="progress js_show">
+        $(function(){
+            var $progress = $('.js_progress'),
+                $btnUpload = $('#btnUpload');
+            var progress = 0;
+            var timeId;
+    
+            function next() {
+                if(progress > 100){
+                    progress = 0;
+                    $btnUpload.removeClass('weui-btn_disabled');
+                    return;
+                }
+                $progress.css({width: progress + '%'});
+                progress = ++progress;
+                timeId=setTimeout(next, 20);
+            }
+    
+            $btnUpload.on('click', function(){
+                if ($btnUpload.hasClass('weui-btn_disabled')) return;
+    
+                $btnUpload.addClass('weui-btn_disabled');
+                next();
+            });
+            // 点击 a.weui-progress__opr 元素，可以中断/取消正在进行的操作
+            $(".weui-progress__opr").on("click",function(){
+                clearTimeout(timeId);
+                $btnUpload.removeClass('weui-btn_disabled');
+            })
+        });
+    </script>
+    <!-- <script>
+        $(function () {
+            $("#btnStartProgress").on("click",uploading);
+            var progress = 0;
+            var $progress = $('.weui-progress__inner-bar');
+
+            function uploading() {
+                $progress.width(++progress % 100 + '%');
+                timeId=setTimeout(uploading, 20);
+            }
+
+            // setTimeout(uploading, 20);
+        });
+    </script> -->
+</body>
+
+</html>

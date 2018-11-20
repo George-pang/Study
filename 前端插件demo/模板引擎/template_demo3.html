@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>模板引擎---不转义</title>
+    <script type="text/javascript" src="./template.js"></script>
+    <script id="test" type="text/html">
+        <!-- 不转义加前缀#，默认转义-->
+        <p>数据中特殊字符不转义(#前缀),设别为标签为：{{#value}}</p>
+        <p>特殊字符默认转义为普通字符输出为： {{value}}</p>
+    </script>
+</head>
+
+<body>
+    <h1>不转义HTML</h1>
+    <div id="content"></div>
+
+    <script>
+    // 这里的数据当中包含特殊字符
+    var data = {
+        value: '<span style="color:#F00">hello world!</span>'
+    };
+    var html=template("test",data);     
+    var content=document.getElementById("content");
+    content.innerHTML=html;
+    </script>
+</body>
+
+</html>
