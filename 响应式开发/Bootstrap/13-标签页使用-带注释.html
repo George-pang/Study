@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+    <link href="./lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="./lib/html5shiv/html5shiv.min.js"></script>
+    <script src="./lib/respond/respond.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div>
+
+    <!-- Nav tabs 导航面板--导航条-->
+    <ul class="nav nav-tabs" role="tablist">
+        <!--href="#home"：锚链接，说明当前导航项链接到id号为home的面板上-->
+        <!--data-toggle="tab"：自定义属性，它会触发一个事件，这个事件就是切换到指定的面板-->
+        <li role="presentation" class="active"><a href="#p1" aria-controls="p1" role="tab" data-toggle="tab">Home</a></li>
+        <li role="presentation"><a href="#p2" aria-controls="p2" role="tab" data-toggle="tab">Profile</a></li>
+        <li role="presentation"><a href="#p3" aria-controls="p3" role="tab" data-toggle="tab">Messages</a></li>
+        <li role="presentation"><a href="#p4" aria-controls="p4" role="tab" data-toggle="tab">Settings</a></li>
+    </ul>
+
+    <!-- Tab panes：内容面板 -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="p1">1</div>
+        <div role="tabpanel" class="tab-pane" id="p2">2</div>
+        <div role="tabpanel" class="tab-pane" id="p3">3</div>
+        <div role="tabpanel" class="tab-pane" id="p4">4</div>
+    </div>
+
+</div>
+<script src="./lib/jquery/jquery.min.js"></script>
+<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>
