@@ -45,7 +45,7 @@
         var source = document.getElementById("entry-template").innerHTML;
         // 2、预编译模板----Handlebars.compile();参数即为获取到的模板
         var template = Handlebars.compile(source);
-        // 3、利用模板解析数据---返回拼接好的字符串
+        // 3、利用模板解析数据---返回拼接好的字符串(html代码)
         var html = template(context);
         // 4、渲染页面
         document.getElementById("box").innerHTML = html;

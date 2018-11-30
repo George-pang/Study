@@ -31,7 +31,9 @@
     {{/each}}
 </script>
 <script type="text/javascript">
+    // 获取模板
     var source = $("#entry-template").html();
+    // 预编译模板
     var template = Handlebars.compile(source);
     var context = {
         "student": [
@@ -48,7 +50,9 @@
         ]
 
     };
+    // 利用模板解析数据，生成html代码
     var html = template(context);
+    // 渲染页面
     $("#tableList").html(html);
 </script>
 </html>
