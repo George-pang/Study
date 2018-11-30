@@ -1,0 +1,47 @@
+/*引入其它的less文件*/
+@import 'base.less';
+/*引入字体文件*/
+@import 'fonts.less';
+/*引入屏幕适配文件*/
+@import 'adapter.less';
+
+.layout{
+  .navTop{
+    > img{
+      width: 100%;
+      display: block;
+    }
+  }
+  .items{
+    padding:0 24/32rem;
+    .title{
+      margin:26/32rem 0;
+      font-size: 28/32rem;
+      overflow: hidden;
+      h4{
+        float: left;
+      }
+      span{
+        float: right;
+        color: #888;
+      }
+    }
+    .item{
+      height:218/32rem;
+      border: 3/32rem dashed #dedede;
+      background-color: #fff;
+      padding-top:36/32rem;
+      font-size: 104/32rem;
+      box-sizing: border-box;
+      a{
+        color: #aeaeae;
+        text-align: center;
+      }
+      span{
+        font-size: 26/32rem;
+        display: block;
+        margin-top:16/32rem;
+      }
+    }
+  }
+}

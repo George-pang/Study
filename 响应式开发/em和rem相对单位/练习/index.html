@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>rem移动端适配小案例</title>
+    <!-- media="screen" 媒体查询是否引入对应的css文件 -->
+    <link rel="stylesheet" type="text/less" media="screen" href="css/index.less" />
+    <!-- 页面直接引用less文件需要使用less.js将其编译成css(好处是只需引入一个less,而不用引用多个css) -->
+    <!-- 引用less用files://协议打开这个页面会报错,使用内置服务器http协议打开-->
+    <script src="js/less.js"></script>
+</head>
+
+<body>
+    <div class="layout">
+        <div class="navTop">
+            <img src="images/topnav.png" alt="">
+        </div>
+        <div class="items">
+            <div class="item">
+                <div class="title">
+                    <h4 class="txt">全场优惠</h4>
+                    <span class="num"><i class="count">0</i>/<i class="total">1</i></span>
+                </div>
+                <div class="box">
+                    <a href="javascript:;" class="icon-add"></a>
+                    <span>
+                        添加优惠
+                    </span>
+                </div>
+            </div>
+            <div class="item">
+                <div class="title">
+                    <h4 class="txt">优惠券</h4>
+                    <span class="num"><i class="count">0</i>/<i class="total">3</i></span>
+                </div>
+                <div class="box">
+                    <a href="javascript:;" class="icon-add"></a>
+                    <span>
+                        添加优惠券
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="tips">
+            提示：<br>
+            1、买家下单时只可选择其一（全场优惠或优惠券）<br>
+            2、优惠券一旦设置后不可修改
+        </div>
+    </div>
+</body>
+
+</html>

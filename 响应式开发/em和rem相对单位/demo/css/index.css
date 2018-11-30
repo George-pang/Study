@@ -1,0 +1,121 @@
+/*引入其它的less文件*/
+body,
+ul,
+li,
+h3,
+h4,
+p {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-color: #f7f4f1;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+.layout {
+  max-width: 640px;
+  margin: 0 auto;
+}
+/*引入字体文件*/
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?i0lieq');
+  src: url('../fonts/icomoon.eot?i0lieq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?i0lieq') format('truetype'), url('../fonts/icomoon.woff?i0lieq') format('woff'), url('../fonts/icomoon.svg?i0lieq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-add:before {
+  content: "\e900";
+}
+.icon-cancle:before {
+  content: "\e901";
+}
+.icon-delete:before {
+  content: "\e902";
+}
+.icon-edit:before {
+  content: "\e903";
+}
+.icon-preview:before {
+  content: "\e904";
+}
+.icon-share:before {
+  content: "\e905";
+}
+.icon-time:before {
+  content: "\e906";
+}
+/*引入屏幕适配文件*/
+@media screen and (device-width: 320px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (device-width: 360px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen and (device-width: 375px) {
+  html {
+    font-size: 18.75px;
+  }
+}
+@media screen and (device-width: 414px) {
+  html {
+    font-size: 20.07px;
+  }
+}
+.layout .navTop > img {
+  width: 100%;
+  display: block;
+}
+.layout .items {
+  padding: 0 0.75rem;
+}
+.layout .items .title {
+  margin: 0.8125rem 0;
+  font-size: 0.875rem;
+  overflow: hidden;
+}
+.layout .items .title h4 {
+  float: left;
+}
+.layout .items .title span {
+  float: right;
+  color: #888;
+}
+.layout .items .item {
+  height: 6.8125rem;
+  border: 0.09375rem dashed #dedede;
+  background-color: #fff;
+  padding-top: 1.125rem;
+  font-size: 3.25rem;
+  box-sizing: border-box;
+}
+.layout .items .item a {
+  color: #aeaeae;
+  text-align: center;
+}
+.layout .items .item span {
+  font-size: 0.8125rem;
+  display: block;
+  margin-top: 0.5rem;
+}

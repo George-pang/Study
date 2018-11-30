@@ -76,16 +76,20 @@
         count: data.length,
         // 当分页被切换时触发，函数返回两个参数：obj（当前分页的所有选项值）、first（是否首次，一般用于初始加载的判断）
         jump: function (obj) {
-          //模拟渲染
+          //obj包含了当前分页的所有参数，比如：
+          console.log(obj.curr); //得到当前页，以便向服务端请求对应页的数据。
+          console.log(obj.limit); //得到每页显示的条数
+
+          //模拟渲染--对一段已知数据进行分页展现，也可以在每次分页切换时发送ajax请求，根据返回的每一页数据来渲染页面
           document.getElementById('biuuu_city_list').innerHTML = function () {
             var arr = [],
-            // concat() 方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本（concat()参数为空的作用就是为了得到原数组副本）。
-            // splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。改变原数组-参数1：要删除的项目位置，参数2：要删除的项目数量。如果设置为 0，则不会删除项目。
-              thisData = data.concat().splice(obj.curr * obj.limit - obj.limit, obj.limit);//返回被删除的项目--即当前页的项目数据
+              // concat() 方法用于连接两个或多个数组。该方法不会改变现有的数组，而仅仅会返回被连接数组的一个副本（concat()参数为空的作用就是为了得到原数组副本）。
+              // splice() 方法向/从数组中添加/删除项目，然后返回被删除的项目。改变原数组-参数1：要删除的项目位置，参数2：要删除的项目数量。如果设置为 0，则不会删除项目。
+              thisData = data.concat().splice(obj.curr * obj.limit - obj.limit, obj.limit); //返回被删除的项目--即当前页的项目数据
             layui.each(thisData, function (index, item) {
               arr.push('<li>' + item + '</li>');
             });
-            return arr.join('');//join() 方法用于把数组中的所有元素放入一个字符串。
+            return arr.join(''); //join() 方法用于把数组中的所有元素放入一个字符串。
           }();
         }
       });

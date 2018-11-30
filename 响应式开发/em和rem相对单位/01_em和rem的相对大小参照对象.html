@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>Page_Title</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="" />
+    <script src=""></script>
+    <style>
+        html{
+            font-size: 18px;
+        }
+        .box{
+            width: 10em;
+            height: 10em;
+            background-color: pink;
+            font-size: 12px;/* 设置了字号后，1em为12px */
+        }
+        .box2{
+            width: 10rem;
+            height: 10rem;
+            background-color: purple;
+            font-size: 12px;/* 设置了字号后，1rem仍然为18px--html元素字号 */
+        }
+    </style>
+</head>
+<body>
+    <h4>em单位参考的是应用于当前元素的字体大小，若没有设置，就参照父元素或者当前浏览器的默认字号</h4>
+    <div class="box">
+    </div>
+    <br>
+    <hr>
+    <h4>rem是CSS3新增的长度单位，参照的是应用于页面根元素（html）的字号</h4>
+    <div class="box2"></div>
+</body>
+</html>

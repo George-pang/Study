@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+img {
+  vertical-align: middle;
+}
+body {
+  background-color: #f7f4f1;
+}
+h3,
+h4 {
+  font-weight: normal;
+}
+i {
+  font-style: normal;
+}
+.layout {
+  max-width: 640px;
+  /* 屏幕超出640px,则居中显示,不再自适应100%宽 */
+  margin: 0 auto;
+}

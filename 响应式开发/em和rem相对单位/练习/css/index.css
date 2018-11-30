@@ -1,0 +1,142 @@
+/* 引入字体样式 less文件*/
+@font-face {
+  font-family: 'icomoon';
+  src: url('../fonts/icomoon.eot?i0lieq');
+  src: url('../fonts/icomoon.eot?i0lieq#iefix') format('embedded-opentype'), url('../fonts/icomoon.ttf?i0lieq') format('truetype'), url('../fonts/icomoon.woff?i0lieq') format('woff'), url('../fonts/icomoon.svg?i0lieq#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* 属性选择器 */
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-add:before {
+  content: "\e900";
+}
+.icon-cancle:before {
+  content: "\e901";
+}
+.icon-delete:before {
+  content: "\e902";
+}
+.icon-edit:before {
+  content: "\e903";
+}
+.icon-preview:before {
+  content: "\e904";
+}
+.icon-share:before {
+  content: "\e905";
+}
+.icon-time:before {
+  content: "\e906";
+}
+/* 引入公共样式less文件 */
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+img {
+  vertical-align: middle;
+}
+body {
+  background-color: #f7f4f1;
+}
+h3,
+h4 {
+  font-weight: normal;
+}
+i {
+  font-style: normal;
+}
+.layout {
+  max-width: 640px;
+  /* 屏幕超出640px,则居中显示,不再自适应100%宽 */
+  margin: 0 auto;
+}
+/* 引入移动端rem适配less文件 */
+/* 移动端适配,设置rem的大小,默认整个屏幕宽度是20rem */
+@media screen and (device-width: 320px) {
+  html {
+    font-size: 16px;
+  }
+}
+@media screen and (device-width: 360px) {
+  html {
+    font-size: 18px;
+  }
+}
+@media screen and (device-width: 375px) {
+  html {
+    font-size: 18.75px;
+  }
+}
+@media screen and (device-width: 414px) {
+  html {
+    font-size: 20.07px;
+  }
+}
+.navTop img {
+  width: 100%;
+}
+.items .item {
+  padding: 0 0.75rem;
+}
+.items .item .title {
+  height: 2.625rem;
+  line-height: 2.625rem;
+  font-size: 0.875rem;
+  font-family: STXihei;
+  color: #000;
+  overflow: hidden;
+}
+.items .item .title .txt {
+  float: left;
+}
+.items .item .title .num {
+  float: right;
+  color: #888;
+}
+.items .item .box {
+  height: 7rem;
+  padding-top: 1.25rem;
+  border: 0.09375rem dashed #dedede;
+  box-sizing: border-box;
+  background-color: #fff;
+  text-align: center;
+  color: #aeaeae;
+}
+.items .item .box .icon-add {
+  font-size: 3.0625rem;
+  color: #aeaeae;
+}
+.items .item .box span {
+  display: inline-block;
+  margin-top: 0.5625rem;
+  font-family: STHeiti;
+  font-size: 0.8125rem;
+}
+.tips {
+  margin-top: 3.5625rem;
+  padding: 0 0.75rem;
+  font-family: STXihei;
+  font-size: 0.75rem;
+  line-height: 1.25rem;
+  letter-spacing: -0.03125rem;
+  color: #999;
+}

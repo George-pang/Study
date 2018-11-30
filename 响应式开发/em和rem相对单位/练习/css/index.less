@@ -1,0 +1,60 @@
+/* 引入字体样式 less文件*/
+@import 'fonts.less';
+/* 引入公共样式less文件 */
+@import 'base.less';
+/* 引入移动端rem适配less文件 */
+@import 'adapter.less';
+
+.navTop{
+    img{
+        width: 100%;
+    }
+}
+.items{
+    .item{
+        padding: 0 24/32rem;//32为设计稿(640px==20rem)宽时rem的大小
+        .title{
+            height: 84/32rem;
+            line-height: 84/32rem;
+            font-size: 28/32rem;
+            font-family: STXihei;
+            color: #000;
+            overflow: hidden;
+            .txt{
+                float: left;
+            }
+            .num{
+                float: right;
+                color: #888;
+            }
+        }
+        .box{
+            height: 224/32rem;
+            padding-top: 40/32rem;
+            border: 3/32rem dashed #dedede;
+            box-sizing: border-box;
+            background-color: #fff;
+            text-align: center;
+            color: #aeaeae;
+            .icon-add{
+                font-size: 98/32rem;
+                color: #aeaeae;
+            }
+            span{
+                display: inline-block;
+                margin-top: 18/32rem;
+                font-family: STHeiti;
+                font-size: 26/32rem;
+            }
+        }
+    }
+}
+.tips{
+    margin-top: 114/32rem;
+    padding: 0 24/32rem;
+    font-family: STXihei;
+	font-size: 24/32rem;
+	line-height: 40/32rem;
+	letter-spacing: -1/32rem;
+	color: #999;
+}
